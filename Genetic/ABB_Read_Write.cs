@@ -245,9 +245,6 @@ namespace ABB_RW
             UserDefined processdata = new UserDefined(rdt);
             processdata = (UserDefined)rd.Value;
 
-            
-            //Branch
-
             return Boolean_Value;
         }
     }
