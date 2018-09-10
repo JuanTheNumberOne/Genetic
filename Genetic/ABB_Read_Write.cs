@@ -228,5 +228,27 @@ namespace ABB_RW
 
             return Data_Records_List;
         }
+
+        public Boolean Read_ABB_Bool(string Data_Record_Name, string Module_Name, string Task_Name, Controller aController)
+        {
+
+            Boolean Boolean_Value = false;
+
+            string L_Module_Name = Module_Name;
+            string L_Task_Name = Task_Name;
+            string L_Data_Record_Name = Data_Record_Name;
+            Controller L_aController = aController;
+
+            rd = L_aController.Rapid.GetRapidData(Task_Name, Module_Name, L_Data_Record_Name);
+            rdt = L_aController.Rapid.GetRapidDataType(L_Task_Name, L_Module_Name, L_Data_Record_Name);
+
+            UserDefined processdata = new UserDefined(rdt);
+            processdata = (UserDefined)rd.Value;
+
+            
+
+
+            return Boolean_Value;
+        }
     }
 }
