@@ -231,6 +231,7 @@ namespace ABB_RW
 
         public Boolean Read_ABB_Bool(string Data_Record_Name, string Module_Name, string Task_Name, Controller aController)
         {
+            //Test with polszenager home
 
             Boolean Boolean_Value = false;
 
