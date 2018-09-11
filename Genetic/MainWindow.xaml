@@ -16,7 +16,7 @@
         <Label Content="First Generation" HorizontalAlignment="Left" Height="28" Margin="328,312,0,0" VerticalAlignment="Top" Width="142" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="1"/>
         <TextBox x:Name="Results_Windows" HorizontalAlignment="Left" Height="67" Margin="10,415,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="720" Grid.Column="2"/>
         <Button x:Name="Let_There_Be_Light" Content="Let There be light&#xA;" HorizontalAlignment="Left" Height="54" Margin="229,500,0,0" VerticalAlignment="Top" Width="238" Click="Let_There_Be_Light_Click" FontSize="16" FontWeight="Bold" Grid.Column="2"/>
-        <Button x:Name="Scanner" Content="Scan for controllers" HorizontalAlignment="Left" Height="54" Margin="10,345,0,0" VerticalAlignment="Top" Width="154" Click="Scanner_Click" Grid.Column="2"/>
+        <Button x:Name="Scanner" Content="Scan for controllers" HorizontalAlignment="Left" Height="54" Margin="10,345,0,0" VerticalAlignment="Top" Width="135" Click="Scanner_Click" Grid.Column="2"/>
         <ListView x:Name="Parameters_View" HorizontalAlignment="Center" Height="279" Margin="-38,61,44,0" VerticalAlignment="Top" Width="894" Grid.Column="1">
             <ListView.View>
                 <GridView>
@@ -63,9 +63,10 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="Start" Content="&#xD;&#xA;Start Rapid&#xD;&#xA;" HorizontalAlignment="Left" Height="54" Margin="169,345,0,0" VerticalAlignment="Top" Width="154" Click="Start_Click" Grid.Column="2"/>
-        <Button x:Name="Stop" Content="&#xD;&#xA;Stop Rapid&#xD;&#xA;&#xA;" HorizontalAlignment="Left" Height="54" Margin="328,345,0,0" VerticalAlignment="Top" Width="154" Click="Stop_Click" Grid.Column="2"/>
-        <Button x:Name="Write" Content="&#xD;&#xA;Write raw&#xA;" HorizontalAlignment="Left" Height="54" Margin="487,345,0,0" VerticalAlignment="Top" Width="154" Click="Write_Click" Grid.Column="2"/>
+        <Button x:Name="Start" Content="&#xD;&#xA;Start Rapid&#xD;&#xA;" HorizontalAlignment="Left" Height="54" Margin="150,345,0,0" VerticalAlignment="Top" Width="134" Click="Start_Click" Grid.Column="2"/>
+        <Button x:Name="Stop" Content="&#xD;&#xA;Stop Rapid&#xD;&#xA;&#xA;" HorizontalAlignment="Left" Height="54" Margin="289,345,0,0" VerticalAlignment="Top" Width="136" Click="Stop_Click" Grid.Column="2"/>
+        <Button x:Name="Write" Content="&#xD;&#xA;Write raw&#xA;" HorizontalAlignment="Left" Height="54" Margin="430,345,0,0" VerticalAlignment="Top" Width="134" Click="Write_Click" Grid.Column="2"/>
+        <Button x:Name="Read" Content="&#xD;&#xA;Read times&#xA;" HorizontalAlignment="Left" Height="54" Margin="569,345,0,0" VerticalAlignment="Top" Width="115" Click="Read_Click" Grid.Column="2"/>
 
 
 
