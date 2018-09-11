@@ -275,6 +275,40 @@ namespace Network_Scanner_Domain
 
         }
 
+        public bool Read_Bool(string BoolName)
+        {
+            ABB_Data_Read Read = new ABB_Data_Read();
+            bool bValue = false;
+            try
+            {
+                tasks = controller.Rapid.GetTasks();
+                using (Mastership m = Mastership.Request(this.controller.Rapid))
+                {
+
+                    //Check if the user has the rights to execute RAPID program
+                    if (uas.CheckDemandGrant(Grant.ModifyRapidDataValue))
+                    {
+                        //Modify the rapid value
+                        bValue = Read.Read_ABB_Bool("mMain", "T_MAIN", controller, BoolName);
+                        return bValue;
+                    }
+                    else return bValue;
+
+                }
+            }
+            catch (System.InvalidOperationException ex)
+            {
+                //return _infomessage = "Mastership is held by another client." + ex.Message;
+                return false;
+            }
+            catch (System.Exception ex)
+            {
+                //return _infomessage = "Unexpected error occurred: " + ex.Message;
+                return false;
+            }
+
+        }
+
         public string Read_Records()
         {
 
