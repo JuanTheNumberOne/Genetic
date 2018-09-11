@@ -82,7 +82,7 @@ namespace Genetic
                     return -1;
                 }
 
-                FitnessScore = Math.Round(Test.dTime / dCompletionTime, 2);
+                FitnessScore = Math.Round(dCompletionTime / Test.dTime, 2);
                 decTotalFitness = Math.Round(decTotalFitness + FitnessScore, 2);
                 return FitnessScore;
             }
