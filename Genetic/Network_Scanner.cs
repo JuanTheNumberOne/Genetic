@@ -309,40 +309,37 @@ namespace Network_Scanner_Domain
 
         }
 
-        public string Read_Records()
+        public string Read_Record_FromArray(int Individual_Index)
         {
 
             ABB_Data_Read Read_DataRecord = new ABB_Data_Read();
-            List<string> Record_List;
-            ListViewItem item = null;
-            string _infomessage = "";
-            int i;
+            string Individual_Time = "";
 
             try
             {
-                Record_List = Read_DataRecord.Read_ABB_DataRecord("Record_1", "mMain", "T_MAIN", controller);
+                using (Mastership m = Mastership.Request(controller.Rapid))
                 {
-                    
-
-                    i = 0;
-                    //Populate the list
-                    foreach (string Record_List_Element in Record_List)
+                    //Check if the user has the rights to execute RAPID program
+                    if (uas.CheckDemandGrant(Grant.ModifyRapidDataValue))
                     {
-                        i++;
+
+                        Individual_Time = Read_DataRecord.Read_ABB_DataRecord("RawIndividual", "mMain", "T_MAIN", controller, Individual_Index);
+                        return Individual_Time;
+
                     }
-                    return _infomessage = "Data records read";
+                    else return Individual_Time;
 
                 }
-
+                
             }
 
             catch (System.NullReferenceException ex)
             {
-                return _infomessage = "No data in the user defined data type or not logged in a controller" + ex.Message;
+                return Individual_Time;
             }
         }
 
-        public string Write_Record(int[] Parameters, int Individual_Index)
+        public string Write_Record_In_Array(int[] Parameters, int Individual_Index)
         {
             ABB_Data_Write Write_DataRecord = new ABB_Data_Write();
             string _infomessage = "";
