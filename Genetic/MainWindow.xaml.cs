@@ -36,7 +36,7 @@ namespace Genetic
         {
             InitializeComponent();
             World.PopulationSize = 15;
-            World.dCompletionTime = 725;
+            World.dCompletionTime = (decimal)0.10; // Distance d= 924 mm, velocity v= 9000 mm/s , ignoring acceleration and deceleration, massless point (no energy loss)
             World.iBreedingChance = 100;
             World.iPercentageOfElites = 10;
             World.dMutationChance = 50;
@@ -81,7 +81,7 @@ namespace Genetic
             Parameters_View.ItemsSource = World.Population;
             for (int i = 0; i < World.Population.Count; i++)
             {
-                Results_Windows.Text = _Scanner.Write_Record(World.Population[i].DNA, i);
+                Results_Windows.Text = _Scanner.Write_Record_In_Array(World.Population[i].DNA, i);
             }
             _Scanner.Set_Reset_Bool("bDataReceived", true);
         }
@@ -90,11 +90,24 @@ namespace Genetic
         {
             bool _DataReadyToRead = false;
             _DataReadyToRead =_Scanner.Read_Bool("bWaitForNewData");
+            decimal TryParse_Out = 0;
+            string _Individual_Time_Elapsed = "";
             while (_DataReadyToRead == false)
             {
                 Thread.Sleep(10);
             }
-            Results_Windows.Text = "Individuals tested, times for fitness function ready";
+            for (int i = 0; i < World.Population.Count; i++)
+            {
+                //Read the elapsed time for each indivdual and update it in the population
+                _Individual_Time_Elapsed = _Scanner.Read_Record_FromArray(i);
+                Decimal.TryParse(_Individual_Time_Elapsed, out TryParse_Out);
+                World.Population[i].dTime = TryParse_Out;
+            }         
+            Results_Windows.Text = "Elapsed times read, ready to calculate fitness functions";
+            World.CalculateFitnessPopulation();
+            //Sort by fitness score
+            World.Population.Sort((x, y) => y.dFitnessScore.CompareTo(x.dFitnessScore));
+            Refresh_Actual_List();
         }
 
         //GENETIC ALGORITH ML AREA
