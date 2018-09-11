@@ -199,8 +199,12 @@ namespace ABB_RW
     {
 
         //Data domain
+        private Num rapid_num;
+        private Bool rapid_bool;
         private RapidData rd;
+        private RapidData rd_array;
         private RapidDataType rdt;
+        private ArrayData ad;
 
         //Functions
 
@@ -229,7 +233,7 @@ namespace ABB_RW
             return Data_Records_List;
         }
 
-        public Boolean Read_ABB_Bool(string Data_Record_Name, string Module_Name, string Task_Name, Controller aController)
+        public Boolean Read_ABB_Bool(string Module_Name, string Task_Name, Controller aController, string Boolean_Name)
         {
 
 
@@ -237,14 +241,47 @@ namespace ABB_RW
 
             string L_Module_Name = Module_Name;
             string L_Task_Name = Task_Name;
-            string L_Data_Record_Name = Data_Record_Name;
+            string L_Data_Record_Name = Boolean_Name;
             Controller L_aController = aController;
 
-            rd = L_aController.Rapid.GetRapidData(Task_Name, Module_Name, L_Data_Record_Name);
-            rdt = L_aController.Rapid.GetRapidDataType(L_Task_Name, L_Module_Name, L_Data_Record_Name);
+            try
+            {
 
-            UserDefined processdata = new UserDefined(rdt);
-            processdata = (UserDefined)rd.Value;
+                rd = L_aController.Rapid.GetRapidData(Task_Name, Module_Name, Boolean_Name);
+                if (rd.Value is Bool)
+                {
+                    //Write the value
+                    rapid_bool.Value = (Bool)rd.Value;
+                    Boolean_Value = rapid_bool.Value;
+                }
+                return Boolean_Value;
+
+            }
+
+            catch (ABB.Robotics.Controllers.RapidDomain.RapidModuleNotFoundException ee)
+            {
+                // TODO: Add error handling
+                //MessageBox.Show("Error: " + ee.Message);
+            }
+            catch (ABB.Robotics.Controllers.RapidDomain.RapidSymbolNotFoundException ee)
+            {
+                // TODO: Add error handling
+                //MessageBox.Show("Error: " + ee.Message);
+            }
+            catch (ABB.Robotics.GenericControllerException ee)
+            {
+                // TODO: Add error handling
+                //MessageBox.Show("Error: " + ee.Message);
+            }
+            catch (System.Exception ee)
+            {
+                // TODO: Add error handling
+                //MessageBox.Show("Error: " + ee.Message);
+            }
+            finally
+            {
+                // Release resources
+            }
 
             return Boolean_Value;
         }
