@@ -84,8 +84,17 @@ namespace Genetic
                 Results_Windows.Text = _Scanner.Write_Record(World.Population[i].DNA, i);
             }
             _Scanner.Set_Reset_Bool("bDataReceived", true);
+        }
 
-
+        private void Read_Click(object sender, RoutedEventArgs e)
+        {
+            bool _DataReadyToRead = false;
+            _DataReadyToRead =_Scanner.Read_Bool("bWaitForNewData");
+            while (_DataReadyToRead == false)
+            {
+                Thread.Sleep(10);
+            }
+            Results_Windows.Text = "Individuals tested, times for fitness function ready";
         }
 
         //GENETIC ALGORITH ML AREA
