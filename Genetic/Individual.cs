@@ -76,7 +76,7 @@ namespace Genetic
                 iAcceleration_Ramp = r.Next(1,100);
 
                 //For the tests the completion time will be a product of an abstract equation
-                dTime = (iSpeed / 10 + iZone / 2 + iAcceleration * 2 + iAcceleration_Ramp * (3/2))/2; //MAXIMUM IS 725
+                //dTime = (iSpeed / 10 + iZone / 2 + iAcceleration * 2 + iAcceleration_Ramp * (3/2))/2; //MAXIMUM IS 725
 
                 //Save the information in the DNA
                 DNA = new int[5] {iMovementType, iSpeed,iZone,iAcceleration,iAcceleration_Ramp};
