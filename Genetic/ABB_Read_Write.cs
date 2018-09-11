@@ -159,9 +159,6 @@ namespace ABB_RW
                     processdata.Components[i].FillFromString(_Variables[i]);
                 }
 
-                ////Apply the value
-                //rd.Value = processdata;
-
                 //Add the parameters to the array
                 rd_array.Value = ad;
                 ad[ArrayIndex] = processdata;
@@ -209,28 +206,59 @@ namespace ABB_RW
         //Functions
 
 
-        public List<string> Read_ABB_DataRecord(string Data_Record_Name, string Module_Name, string Task_Name, Controller aController)
+        public string Read_ABB_DataRecord(string Data_Record_Name, string Module_Name, string Task_Name, Controller aController, int ArrayIndex)
         {
 
-            List<string> Data_Records_List = new List<string>();
+            string Data_Records_Time = " ";
 
             string L_Module_Name = Module_Name;
             string L_Task_Name = Task_Name;
             string L_Data_Record_Name = Data_Record_Name;
             Controller L_aController = aController;
+            string _info;
 
-            rd = L_aController.Rapid.GetRapidData(Task_Name, Module_Name, L_Data_Record_Name);
-            rdt = L_aController.Rapid.GetRapidDataType(L_Task_Name, L_Module_Name, L_Data_Record_Name);
+            try
+            {
 
-            UserDefined processdata = new UserDefined(rdt);
-            processdata = (UserDefined)rd.Value;
+                //Get the array with the records
+                rd_array = aController.Rapid.GetRapidData(Task_Name, Module_Name, "RawIndividuals");
+                ad = (ArrayData)rd_array.Value;
+                int aRank = ad.Rank;
 
-            Data_Records_List.Add(processdata.Components[0].ToString());
-            Data_Records_List.Add(processdata.Components[1].ToString());
-            Data_Records_List.Add(processdata.Components[2].ToString());
+                //Read the record
+                rd = L_aController.Rapid.GetRapidData(Task_Name, Module_Name, L_Data_Record_Name);
+                rdt = L_aController.Rapid.GetRapidDataType(L_Task_Name, L_Module_Name, L_Data_Record_Name);
+                UserDefined processdata = new UserDefined(rdt);
+                
+                processdata = (UserDefined)ad[ArrayIndex];
 
+                //Get the time elapsed using the individual's parameters
+                Data_Records_Time = processdata.Components[5].ToString();
+                return Data_Records_Time;
 
-            return Data_Records_List;
+            }
+
+            catch (ABB.Robotics.Controllers.RapidDomain.RapidModuleNotFoundException ee)
+            {
+                return _info = "Error: " + ee.Message;
+            }
+            catch (ABB.Robotics.Controllers.RapidDomain.RapidSymbolNotFoundException ee)
+            {
+                return _info = "Error: " + ee.Message;
+            }
+            catch (ABB.Robotics.GenericControllerException ee)
+            {
+                return _info = "Error: " + ee.Message;
+            }
+            catch (System.Exception ee)
+            {
+               return _info = "Error: " + ee.Message;
+            }
+            finally
+            {
+                //
+            }
+
         }
 
         public Boolean Read_ABB_Bool(string Module_Name, string Task_Name, Controller aController, string Boolean_Name)
