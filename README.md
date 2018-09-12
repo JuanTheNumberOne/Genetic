@@ -6,7 +6,7 @@ prepared a priori to receive and transfer the data (variable names and such that
 
 After that use the button "Let there be light", then a first generation of individuals (each containing the parameters in their DNA)
 that are send to the robot's controller. The controller then executes the trajectory according to the parameters of each individual.
-Each of these trajectories time should be monitored by the robot in order to get a measure of the time elapsed for each trajectory.
+Each of these trajectorie's time should be monitored by the robot in order to get a measure of the time elapsed for each trajectory.
 When the robot has measured all the trajectories it asks the app for new input data. The app then reads the measured times, and according to them
 calculates the fitness score of each individual. Then it executes the genetic algorithm to build the next generation of individuals, which should again 
 be tested as described before in the first generation.
