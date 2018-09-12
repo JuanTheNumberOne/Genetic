@@ -1,0 +1,12 @@
+#Some binary files or so, exes and other stuff
+*.exe
+*.pdb
+*.resx
+*.settings
+*.ide-shm
+*.ide-walh
+*.vs/
+Genetic/App.xaml.cs
+Genetic/bin/
+Genetic/obj/
+h
