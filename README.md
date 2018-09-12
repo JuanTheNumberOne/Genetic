@@ -1,6 +1,6 @@
 # Genetic
 This application (app) is used to implement a genetic algorithm to find the optimal parameters of an ABB'S Robot trajectoy.
-The app let's you scann for avaible controllers in your local area. Once a controller or controllers have been found, you will
+The app let's you scann for avaible controllers in your local area network. Once a controller or controllers have been found, you will
 have to double click to get the controller's info needed to write/read the controller's data. The program in the robot's controllers must be
 prepared a priori to receive and transfer the data (variable names and such that match those used in the app).
 
