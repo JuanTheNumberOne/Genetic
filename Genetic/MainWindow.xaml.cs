@@ -32,6 +32,59 @@ namespace Genetic
         //This class also serves as the interface point between the ABB controller and the GA app
         private Network_Scanner _Scanner = new Network_Scanner();
 
+        //Delegate to raise the event of data ready to read instead of waiting in a loop
+        public delegate void RobotHasTestedIndividuals(); //This is the pointer class to the method
+        public event RobotHasTestedIndividuals DataTested;   //Define the event that calls the delegate
+
+        //See if there are any subscribers and fire the event
+        protected virtual void OnDataTested()
+        {
+            DataTested?.Invoke();
+
+            /*
+             Or 
+             if (DataTested !=Null)
+             {
+               DataTested(this, EventArgs.Empty);
+             }
+             */
+        }
+
+        //Event handler
+        public void HandleDataTested()
+        {
+            //The dispatcher allows us to throw the action to the UI thread?
+            Thread.Sleep(2000);
+            Dispatcher.Invoke(() =>
+            {
+                Refresh_Actual_List();
+            });
+        }
+
+        //Variable to have green light once data is ready to read
+        private bool DataReadyToRead = false;
+        private bool DataWritten = false;
+
+        private bool _RefreshedNeeded = false;
+
+        //Here fire the event if the bool is true
+        public bool RefreshNeeded
+        {
+            get { return _RefreshedNeeded; }
+
+            set
+            {
+                _RefreshedNeeded = value;
+                if (_RefreshedNeeded == true)
+                {
+                    //Here raise the event
+                    OnDataTested();
+                }
+
+            }
+        }
+        public Task ReadTimes;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -41,6 +94,14 @@ namespace Genetic
             World.iPercentageOfElites = 10;
             World.dMutationChance = 50;
             World.bAllowInnBreeding = false;
+            RefreshNeeded = false;
+
+            //Create a subscription
+            DataTested += HandleDataTested;
+            //Start reading in the background when the times from the robot is ready to read
+            //Task ReadTimes = new Task(new Action(IsDataReady));
+            ReadTimes = new Task(new Action(IsDataReady));
+            ReadTimes.Start();
         }
 
         //ABB INTERFACE AND DATA EXCHANGE AREA
@@ -84,30 +145,66 @@ namespace Genetic
                 Results_Windows.Text = _Scanner.Write_Record_In_Array(World.Population[i].DNA, i);
             }
             _Scanner.Set_Reset_Bool("bDataReceived", true);
+            DataWritten = true;
         }
 
         private void Read_Click(object sender, RoutedEventArgs e)
         {
-            bool _DataReadyToRead = false;
-            _DataReadyToRead =_Scanner.Read_Bool("bWaitForNewData");
-            decimal TryParse_Out = 0;
-            string _Individual_Time_Elapsed = "";
-            while (_DataReadyToRead == false)
-            {
-                Thread.Sleep(10);
-            }
-            for (int i = 0; i < World.Population.Count; i++)
-            {
-                //Read the elapsed time for each indivdual and update it in the population
-                _Individual_Time_Elapsed = _Scanner.Read_Record_FromArray(i);
-                Decimal.TryParse(_Individual_Time_Elapsed, out TryParse_Out);
-                World.Population[i].dTime = TryParse_Out;
-            }         
-            Results_Windows.Text = "Elapsed times read, ready to calculate fitness functions";
-            World.CalculateFitnessPopulation();
-            //Sort by fitness score
-            World.Population.Sort((x, y) => y.dFitnessScore.CompareTo(x.dFitnessScore));
+            //bool _DataReadyToRead = false;
+            //_DataReadyToRead =_Scanner.Read_Bool("bWaitForNewData");
+            //decimal TryParse_Out = 0;
+            //string _Individual_Time_Elapsed = "";
+            //while (_DataReadyToRead == false)
+            //{
+            //    Thread.Sleep(10);
+            //}
+            //for (int i = 0; i < World.Population.Count; i++)
+            //{
+            //    //Read the elapsed time for each indivdual and update it in the population
+            //    _Individual_Time_Elapsed = _Scanner.Read_Record_FromArray(i);
+            //    Decimal.TryParse(_Individual_Time_Elapsed, out TryParse_Out);
+            //    World.Population[i].dTime = TryParse_Out;
+            //}         
+            //Results_Windows.Text = "Elapsed times read, ready to calculate fitness functions";
+            //World.CalculateFitnessPopulation();
+            ////Sort by fitness score
+            //World.Population.Sort((x, y) => y.dFitnessScore.CompareTo(x.dFitnessScore));
             Refresh_Actual_List();
+        }
+
+        private void IsDataReady()
+        {
+            while (RefreshNeeded == false)
+            { 
+                if (DataReadyToRead == false & World.Population != null & DataWritten == true)
+                {
+                    DataReadyToRead = _Scanner.Read_Bool("bWaitForNewData");
+                    if (DataReadyToRead)
+                    {
+                        DataWritten = false;
+                        decimal TryParse_Out = 0;
+                        string _Individual_Time_Elapsed = "";
+
+                        for (int i = 0; i < World.Population.Count; i++)
+                        {
+                            //Read the elapsed time for each indivdual and update it in the population
+                            _Individual_Time_Elapsed = _Scanner.Read_Record_FromArray(i);
+                            Decimal.TryParse(_Individual_Time_Elapsed, out TryParse_Out);
+                            World.Population[i].dTime = TryParse_Out;
+                        }
+                        World.CalculateFitnessPopulation();
+                        //Sort by fitness score
+                        World.Population.Sort((x, y) => y.dFitnessScore.CompareTo(x.dFitnessScore));
+                        DataReadyToRead = false;
+                        RefreshNeeded = true;
+                        
+                    }
+                }
+                else
+                {
+                    //do nothing
+                }
+            }
         }
 
         //GENETIC ALGORITH ML AREA
@@ -241,6 +338,7 @@ namespace Genetic
         {
             Parameters_View.ItemsSource = null;
             Parameters_View.ItemsSource = World.Population;
+            RefreshNeeded = false;
         }
 
         private void Refresh_Old_List()
