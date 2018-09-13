@@ -85,13 +85,18 @@ namespace Network_Scanner_Domain
         // If new controler found add it to the list
         void HandleFoundEvent(object sender, NetworkWatcherEventArgs e)
         {
-            //this.Invoke(new EventHandler<NetworkWatcherEventArgs>(AddControllerToListView), new Object[] { this, e });
+           // this.Invoke(new EventHandler<NetworkWatcherEventArgs>(AddControllerToListView), new Object[] { this, e });
         }
 
         // If  controler lost, delete it to the list
         void HandleLostEvent(object sender, NetworkWatcherEventArgs e)
         {
             //this.Invoke(new EventHandler<NetworkWatcherEventArgs>(DeleteControllerToListView), new Object[] { this, e });
+        }
+
+        private void Invoke(EventHandler<NetworkWatcherEventArgs> eventHandler, object[] v)
+        {
+            throw new NotImplementedException();
         }
 
         private void AddControllerToListView(object sender, NetworkWatcherEventArgs e)
