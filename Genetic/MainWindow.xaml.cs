@@ -78,7 +78,7 @@ namespace Genetic
                 if (_RefreshedNeeded == true)
                 {
                     //Here raise the event
-                    OnDataTested();
+                    //OnDataTested();
                 }
 
             }
@@ -98,10 +98,11 @@ namespace Genetic
 
             //Create a subscription
             DataTested += HandleDataTested;
+
             //Start reading in the background when the times from the robot is ready to read
             //Task ReadTimes = new Task(new Action(IsDataReady));
-            ReadTimes = new Task(new Action(IsDataReady));
-            ReadTimes.Start();
+            //ReadTimes = new Task(new Action(IsDataReady));
+            //ReadTimes.Start();
         }
 
         //ABB INTERFACE AND DATA EXCHANGE AREA
@@ -192,9 +193,9 @@ namespace Genetic
                             Decimal.TryParse(_Individual_Time_Elapsed, out TryParse_Out);
                             World.Population[i].dTime = TryParse_Out;
                         }
-                        World.CalculateFitnessPopulation();
+                        //World.CalculateFitnessPopulation();
                         //Sort by fitness score
-                        World.Population.Sort((x, y) => y.dFitnessScore.CompareTo(x.dFitnessScore));
+                        //World.Population.Sort((x, y) => y.dFitnessScore.CompareTo(x.dFitnessScore));
                         DataReadyToRead = false;
                         RefreshNeeded = true;
                         
@@ -205,6 +206,7 @@ namespace Genetic
                     //do nothing
                 }
             }
+            Thread.Sleep(0);
         }
 
         //GENETIC ALGORITH ML AREA
@@ -338,7 +340,6 @@ namespace Genetic
         {
             Parameters_View.ItemsSource = null;
             Parameters_View.ItemsSource = World.Population;
-            RefreshNeeded = false;
         }
 
         private void Refresh_Old_List()
@@ -350,44 +351,103 @@ namespace Genetic
 
         private void Let_There_Be_Light_Click(object sender, RoutedEventArgs e)
         {
-            //And there was light
-            Results_Windows.Text = "AND THERE WAS LIGHT... ";
-            int iNumberOfGenerations = 0;
-     
-            //Create the first population population
-            World.CreateGeneration(World.PopulationSize);
-            //Calculate the fitness of the current population individual
-            World.CalculateFitnessPopulation();
-            //Sort by fitness score
-            World.Population.Sort((x,y) => y.dFitnessScore.CompareTo(x.dFitnessScore));
-            Refresh_Old_List();
-            //Choose the elite of the actual generation (The highrollers, the motherfuckers, la creme de la creme, the avengers)
-            World.ChooseElite();
-            World.decTotalFitness = 0;
-
-            //Here should be a check if the actual highest fitness is enough. For later
-
-            for (int i = 0; i < 10; i++)  //Let's say 5 generations
+            //Check if a controller is selected for the algorithm
+            if (_Scanner.controller !=null)
             {
-                //Breed a generation
-                World.Population = World.BreedNextGeneration_Roullete();
+                //And there was light
+                Results_Windows.Text = "AND THERE WAS LIGHT... ";
+                int iNumberOfGenerations = 0;
+                RefreshNeeded = false;
+                DataReadyToRead = false;
+
+                //Create the first population population
+                World.CreateGeneration(World.PopulationSize);
+
+                //Reset the total fitness
+                World.decTotalFitness = 0;
+
+                //Write the first data to robot
+                WriteDataToRobot();
+
+                ReadTimes = new Task(new Action(IsDataReady));
+                ReadTimes.Start();
+
+                //Here begin looping for x generations
+                for (int i = 0; i < 5; i++)
+                {
+
+                    //Wait until paralell task has detected and read avaible data
+                    ReadTimes.Wait();
+
+                    //Calculate the fitness of the current population individual
+                    World.CalculateFitnessPopulation();
+
+                    //Sort by fitness score
+                    World.Population.Sort((x, y) => y.dFitnessScore.CompareTo(x.dFitnessScore));
+
+                    //Display first generation in the window
+                    if (i == 0)
+                    {
+                        Refresh_Old_List();
+                    }
+
+                    //Choose the elite of the actual generation (The highrollers, the motherfuckers, la creme de la creme, the avengers)
+                    World.ChooseElite();
+
+                    //Here should be a check if the actual highest fitness is enough. For later
+
+                    //Breed a generation
+                    World.Population = World.BreedNextGeneration_Roullete();
+
+                    //Update the number of the generation
+                    iNumberOfGenerations = iNumberOfGenerations + 1;
+
+                    //Write the new generation to the robot
+                    WriteDataToRobot();
+
+                    //Reset the total fitness
+                    World.decTotalFitness = 0;
+
+                    //Set the paralell task to detect when new data from the robot is ready
+                    DataReadyToRead = false;
+                    RefreshNeeded = false;
+                    ReadTimes = new Task(new Action(IsDataReady));
+                    ReadTimes.Start();
+                }
+
+                //Wait for the last  population to be read
+                ReadTimes.Wait();
+
+                //Calculate the fitness of the last population
                 World.CalculateFitnessPopulation();
                 World.Population.Sort((x, y) => y.dFitnessScore.CompareTo(x.dFitnessScore));
-                World.ChooseElite();
-                World.decTotalFitness = 0;
-                iNumberOfGenerations = iNumberOfGenerations + 1;
+
+                //Finally display the last generation
+                Refresh_Actual_List();
+                //Display the winner 
+                Results_Windows.Text = "And on the seventh day God had finished his work of creation, so he rested from all " + "The winner is: " + World.Population[0].DNA_Code;
             }
-
-
-            //Finally display the last generation
-            Refresh_Actual_List();
-            //Display the winner 
-            Results_Windows.Text = "AND THERE WAS LIGHT... " + "The winner is: " + World.Population[0].DNA_Code;
+            else
+            {
+                Results_Windows.Text = "No controller selected";
+            }
+ 
         }
 
         private void Parameters_View_Old_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
 
+        }
+
+        private void WriteDataToRobot()
+        {
+            //Write data to robot
+            for (int i = 0; i < World.Population.Count; i++)
+            {
+                Results_Windows.Text = _Scanner.Write_Record_In_Array(World.Population[i].DNA, i);
+            }
+            _Scanner.Set_Reset_Bool("bDataReceived", true);
+            DataWritten = true;
         }
     }
 }
