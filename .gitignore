@@ -10,3 +10,12 @@ Genetic/App.xaml.cs
 Genetic/bin/
 Genetic/obj/
 h
+n
+packages/
+*.tt
+*.edmx
+*.edmx.diagram
+*.Context.cs
+*.Designer.cs
+*.Context.tt
+packages.config
