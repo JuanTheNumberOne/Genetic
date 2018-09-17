@@ -67,6 +67,7 @@
         <Button x:Name="Stop" Content="&#xD;&#xA;Stop Rapid&#xD;&#xA;&#xA;" HorizontalAlignment="Left" Height="54" Margin="289,345,0,0" VerticalAlignment="Top" Width="136" Click="Stop_Click" Grid.Column="2"/>
         <Button x:Name="Write" Content="&#xD;&#xA;Write raw&#xA;" HorizontalAlignment="Left" Height="54" Margin="430,345,0,0" VerticalAlignment="Top" Width="134" Click="Write_Click" Grid.Column="2"/>
         <Button x:Name="Read" Content="&#xD;&#xA;Read times&#xA;" HorizontalAlignment="Left" Height="54" Margin="569,345,0,0" VerticalAlignment="Top" Width="115" Click="Read_Click" Grid.Column="2"/>
+        <Button x:Name="Insert" Content="&#xD;&#xA;Insert row&#xD;&#xA;in db&#xD;&#xA; &#xA;" HorizontalAlignment="Left" Height="54" Margin="524,552,0,0" VerticalAlignment="Top" Width="115" Click="Insert_Click" Grid.Column="2"/>
 
 
 
