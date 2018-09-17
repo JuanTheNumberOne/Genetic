@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
+using Evolution_History_Scribe_Space;
 
 //Domain of interface and communication with ABB controllers
 using Network_Scanner_Domain;
@@ -35,6 +36,9 @@ namespace Genetic
         //Delegate to raise the event of data ready to read instead of waiting in a loop
         public delegate void RobotHasTestedIndividuals(); //This is the pointer class to the method
         public event RobotHasTestedIndividuals DataTested;   //Define the event that calls the delegate
+
+        //Scribe to record and read the evolution history. He is the sole and unique witness of this universe.
+        private Evolution_History_Scribe Royal_Scribe;
 
         //See if there are any subscribers and fire the event
         protected virtual void OnDataTested()
@@ -448,6 +452,24 @@ namespace Genetic
             }
             _Scanner.Set_Reset_Bool("bDataReceived", true);
             DataWritten = true;
+        }
+
+
+
+        private void Insert_Click(object sender, RoutedEventArgs e)
+        {
+            Royal_Scribe = new Evolution_History_Scribe();
+            Individual _Ind = new Individual()
+            {
+                DNA_Code = "1785,14,5,9",
+                dFitnessScore = (decimal)0.56,
+                dWeightedFitnessValue = (decimal)0.6,
+                dTime = (decimal)0.67
+
+            };
+            Royal_Scribe.Add_Individual_Record(_Ind,1,1);
+            
+
         }
     }
 }
