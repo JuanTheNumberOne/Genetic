@@ -98,6 +98,7 @@ namespace Genetic
             World.iPercentageOfElites = 10;
             World.dMutationChance = 50;
             World.bAllowInnBreeding = false;
+            World.iWolrdIndex = 1;
             RefreshNeeded = false;
 
             //Create a subscription
@@ -155,25 +156,6 @@ namespace Genetic
 
         private void Read_Click(object sender, RoutedEventArgs e)
         {
-            //bool _DataReadyToRead = false;
-            //_DataReadyToRead =_Scanner.Read_Bool("bWaitForNewData");
-            //decimal TryParse_Out = 0;
-            //string _Individual_Time_Elapsed = "";
-            //while (_DataReadyToRead == false)
-            //{
-            //    Thread.Sleep(10);
-            //}
-            //for (int i = 0; i < World.Population.Count; i++)
-            //{
-            //    //Read the elapsed time for each indivdual and update it in the population
-            //    _Individual_Time_Elapsed = _Scanner.Read_Record_FromArray(i);
-            //    Decimal.TryParse(_Individual_Time_Elapsed, out TryParse_Out);
-            //    World.Population[i].dTime = TryParse_Out;
-            //}         
-            //Results_Windows.Text = "Elapsed times read, ready to calculate fitness functions";
-            //World.CalculateFitnessPopulation();
-            ////Sort by fitness score
-            //World.Population.Sort((x, y) => y.dFitnessScore.CompareTo(x.dFitnessScore));
             Refresh_Actual_List();
         }
 
@@ -360,7 +342,7 @@ namespace Genetic
             {
                 //And there was light
                 Results_Windows.Text = "AND THERE WAS LIGHT... ";
-                int iNumberOfGenerations = 0;
+                int iNumberOfGenerations = 1;
                 RefreshNeeded = false;
                 DataReadyToRead = false;
 
@@ -377,7 +359,7 @@ namespace Genetic
                 ReadTimes.Start();
 
                 //Here begin looping for x generations
-                for (int i = 0; i < 5; i++)
+                for (int i = 1; i < 5; i++)
                 {
 
                     //Wait until paralell task has detected and read avaible data
@@ -388,6 +370,13 @@ namespace Genetic
 
                     //Sort by fitness score
                     World.Population.Sort((x, y) => y.dFitnessScore.CompareTo(x.dFitnessScore));
+                    World.Population.Sort((x, y) => x.dTime.CompareTo(y.dTime));
+
+                    //Register the current generation in the database
+                    for (int j = 0; j < World.PopulationSize; j++)
+                    {
+                        RecordIndividual(World.Population[j],World.iWolrdIndex,iNumberOfGenerations);
+                    }
 
                     //Display first generation in the window
                     if (i == 0)
@@ -425,6 +414,13 @@ namespace Genetic
                 //Calculate the fitness of the last population
                 World.CalculateFitnessPopulation();
                 World.Population.Sort((x, y) => y.dFitnessScore.CompareTo(x.dFitnessScore));
+                World.Population.Sort((x, y) => x.dTime.CompareTo(y.dTime));
+
+                //Register the last generation in the database
+                for (int j = 0; j < World.PopulationSize; j++)
+                {
+                    RecordIndividual(World.Population[j], World.iWolrdIndex, iNumberOfGenerations);
+                }
 
                 //Finally display the last generation
                 Refresh_Actual_List();
@@ -470,6 +466,13 @@ namespace Genetic
             Royal_Scribe.Add_Individual_Record(_Ind,1,1);
             
 
+        }
+
+        private void RecordIndividual(Individual Idividual_Recorded, int World_Numer, int Generation_Number)
+        {
+            Royal_Scribe = new Evolution_History_Scribe();
+            Individual _Idividual_Recorded = Idividual_Recorded;
+            Royal_Scribe.Add_Individual_Record(_Idividual_Recorded, Generation_Number, World_Numer);
         }
     }
 }
