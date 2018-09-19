@@ -26,6 +26,8 @@ namespace Genetic
         public static decimal decTotalFitness { get; set; }
         //Inbreeding allowance
         public static bool bAllowInnBreeding { get; set; }
+        //Wolrd index
+        public static int iWolrdIndex { get; set; }
 
         //Random numbers
         static Random r = new Random();
@@ -328,7 +330,7 @@ namespace Genetic
 
                 if (_BreedingRoom[0].DNA_Code != _BreedingRoom[1].DNA_Code | bAllowInnBreeding == true)
                 {
-                    //Add breeded newborn to new generation
+                    //Mutate and Add breeded newborn to new generation
                     _Breeded = World.BreedIndividuals(0, 1, _BreedingRoom);
                     _Breeded = _Breeded.Mutate(_Breeded, dMutationChance);
                     _NewGeneration.Add(_Breeded);
