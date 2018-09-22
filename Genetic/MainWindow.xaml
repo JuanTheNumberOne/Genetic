@@ -7,21 +7,51 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="603" Width="1800">
     <Grid RenderTransformOrigin="0.498,0.541" Margin="0,0,18,29" HorizontalAlignment="Right" Width="1741" Height="544" VerticalAlignment="Bottom">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="117*"/>
+            <RowDefinition Height="428*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition Width="225*"/>
             <ColumnDefinition Width="143*"/>
         </Grid.ColumnDefinitions>
-        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="497" Margin="10,37,0,0" VerticalAlignment="Top" Width="896"/>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="148" Margin="906,269,0,0" Grid.Row="1" VerticalAlignment="Top" Width="825"/>
+
+
+
+        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="497" Margin="10,37,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="1721"/>
+
+
+
+        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="349" Margin="906,37,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="825">
+            <ListView x:Name="Controllers_In_Network_List" Height="204" Margin="49,31,50,0" Width="724" MouseDoubleClick="Controllers_In_Network_List_MouseDoubleClick" Tag="{Binding ControllerInfo}" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="ID" Width="30 " DisplayMemberBinding="{Binding Id}"/>
+                        <GridViewColumn Header="Avaibility" Width="110" DisplayMemberBinding="{Binding Availability}"/>
+                        <GridViewColumn Header="Is Virtual" Width="85" DisplayMemberBinding="{Binding IsVirtual}"/>
+                        <GridViewColumn Header="System Name" Width="110" DisplayMemberBinding="{Binding SystemName}"/>
+                        <GridViewColumn Header="Version" Width="90" DisplayMemberBinding="{Binding Version}"/>
+                        <GridViewColumn Header="Controller Name" Width="150" DisplayMemberBinding="{Binding ControllerName}"/>
+                        <GridViewColumn Header="IP adress" Width="140" DisplayMemberBinding="{Binding IPAddress}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Border>
+
+
+
+        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="497" Margin="10,37,0,0" VerticalAlignment="Top" Width="896" Grid.RowSpan="2"/>
 
 
 
         <Label Content="Display 1 (Default: First Generation)" HorizontalAlignment="Left" Height="28" Margin="351,36,0,0" VerticalAlignment="Top" Width="199" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="1"/>
-        <Label Content="Display 2 (Default: Last Generation)" HorizontalAlignment="Left" Height="28" Margin="351,284,0,0" VerticalAlignment="Top" Width="199" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="1"/>
-        <TextBox x:Name="Results_Windows" HorizontalAlignment="Left" Height="67" Margin="994,415,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="720" Grid.Column="1" Grid.ColumnSpan="2"/>
-        <Button x:Name="Let_There_Be_Light" Content="Let There be light&#xA;" HorizontalAlignment="Left" Height="54" Margin="150,490,0,0" VerticalAlignment="Top" Width="238" Click="Let_There_Be_Light_Click" FontSize="16" FontWeight="Bold" Grid.Column="2"/>
-        <Button x:Name="Scanner" Content="Scan for controllers" HorizontalAlignment="Left" Height="39" Margin="10,345,0,0" VerticalAlignment="Top" Width="135" Click="Scanner_Click" Grid.Column="2"/>
-        <ListView x:Name="Parameters_View" HorizontalAlignment="Center" Height="204" Margin="29,69,175,0" VerticalAlignment="Top" Width="860" Grid.Column="1">
+        <Label Content="Display 2 (Default: Last Generation)" HorizontalAlignment="Left" Height="28" Margin="351,167.5,0,0" VerticalAlignment="Top" Width="199" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="1" Grid.Row="1"/>
+        <TextBox x:Name="Results_Windows" HorizontalAlignment="Left" Height="66" Margin="956,335,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="717" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"/>
+        <Button x:Name="Let_There_Be_Light" Content="Let There be light" HorizontalAlignment="Left" Height="39" Margin="499,176,0,0" VerticalAlignment="Top" Width="151" Click="Let_There_Be_Light_Click" FontSize="16" FontWeight="Bold" Grid.Column="2" Grid.Row="1"/>
+        <Button x:Name="Scanner" Content="Scan for controllers" HorizontalAlignment="Left" Height="39" Margin="10,176,0,0" VerticalAlignment="Top" Width="135" Click="Scanner_Click" Grid.Column="2" Grid.Row="1"/>
+        <ListView x:Name="Parameters_View" HorizontalAlignment="Center" Height="204" Margin="29,69,175,0" VerticalAlignment="Top" Width="860" Grid.Column="1" Grid.RowSpan="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Movement Type" Width="100" DisplayMemberBinding="{Binding iMovementType}"/>
@@ -37,7 +67,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListView x:Name="Parameters_View_Old" HorizontalAlignment="Center" Height="200" VerticalAlignment="Top" Width="860" Grid.Column="1" Margin="29,317,175,0" MouseDoubleClick="Parameters_View_Old_MouseDoubleClick">
+        <ListView x:Name="Parameters_View_Old" HorizontalAlignment="Center" Height="200" VerticalAlignment="Top" Width="860" Grid.Column="1" Margin="29,200.5,175,0" MouseDoubleClick="Parameters_View_Old_MouseDoubleClick" Grid.Row="1">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Movement Type" Width="100" DisplayMemberBinding="{Binding iMovementType}"/>
@@ -53,23 +83,11 @@
                 </GridView>
             </ListView.View>
         </ListView>
-
-        <ListView x:Name="Controllers_In_Network_List" HorizontalAlignment="Center" Height="204" Margin="994,69,27,0" VerticalAlignment="Top" Width="720" Grid.Column="1" MouseDoubleClick="Controllers_In_Network_List_MouseDoubleClick" Tag="{Binding ControllerInfo}" Grid.ColumnSpan="2">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="ID" Width="30 " DisplayMemberBinding="{Binding Id}"/>
-                    <GridViewColumn Header="Avaibility" Width="110" DisplayMemberBinding="{Binding Availability}"/>
-                    <GridViewColumn Header="Is Virtual" Width="85" DisplayMemberBinding="{Binding IsVirtual}"/>
-                    <GridViewColumn Header="System Name" Width="110" DisplayMemberBinding="{Binding SystemName}"/>
-                    <GridViewColumn Header="Version" Width="90" DisplayMemberBinding="{Binding Version}"/>
-                    <GridViewColumn Header="Controller Name" Width="150" DisplayMemberBinding="{Binding ControllerName}"/>
-                    <GridViewColumn Header="IP adress" Width="140" DisplayMemberBinding="{Binding IPAddress}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Button x:Name="Start" Content="Start Rapid" HorizontalAlignment="Left" Height="39" Margin="150,345,0,0" VerticalAlignment="Top" Width="134" Click="Start_Click" Grid.Column="2"/>
-        <Button x:Name="Stop" Content="Stop Rapid" HorizontalAlignment="Left" Height="39" Margin="289,345,0,0" VerticalAlignment="Top" Width="136" Click="Stop_Click" Grid.Column="2"/>
+        <Button x:Name="Start" Content="Start Rapid" HorizontalAlignment="Left" Height="39" Margin="165,176,0,0" VerticalAlignment="Top" Width="134" Click="Start_Click" Grid.Column="2" Grid.Row="1"/>
+        <Button x:Name="Stop" Content="Stop Rapid" HorizontalAlignment="Left" Height="39" Margin="331,176,0,0" VerticalAlignment="Top" Width="136" Click="Stop_Click" Grid.Column="2" Grid.Row="1"/>
         <Label Grid.ColumnSpan="2" Content="GENERATION DISPLAY" HorizontalAlignment="Left" Height="39" Margin="10,0,0,0" VerticalAlignment="Top" Width="206" FontSize="18" FontWeight="Bold"/>
+        <Label Content="Message Output" HorizontalAlignment="Left" Height="28" Margin="957,302,0,0" VerticalAlignment="Top" Width="199" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"/>
+        <Label Content="Controllers in network display" HorizontalAlignment="Left" Height="28" Margin="956,37,0,0" VerticalAlignment="Top" Width="200" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="1" Grid.ColumnSpan="2"/>
 
 
 
