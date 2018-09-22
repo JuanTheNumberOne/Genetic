@@ -129,8 +129,8 @@ namespace Genetic
 
             List<Selection_Method_Struct> Combobox_SelectionMethods = new List<Selection_Method_Struct>();
             Combobox_SelectionMethods.Add(new Selection_Method_Struct("Biased Roulette [BR]",1));
-            Combobox_SelectionMethods.Add(new Selection_Method_Struct("Tournament [T]", 1));
-            Combobox_SelectionMethods.Add(new Selection_Method_Struct("Mixed selection [BR + T]", 1));
+            Combobox_SelectionMethods.Add(new Selection_Method_Struct("Tournament [T]", 2));
+            Combobox_SelectionMethods.Add(new Selection_Method_Struct("Mixed selection [BR + T]", 3));
 
             Selection_Method.ItemsSource = Combobox_SelectionMethods;
 
@@ -524,6 +524,8 @@ namespace Genetic
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            Selection_Method_Struct Method_Selected = (Selection_Method_Struct)Selection_Method.SelectedItem;
+            World.iSelectedMethod = Method_Selected.MethodIndex;
 
         }
     }
