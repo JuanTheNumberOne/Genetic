@@ -22,7 +22,15 @@
             <TextBox x:Name="Generation_Number" HorizontalAlignment="Left" Height="23" Margin="243,264,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="42" RenderTransformOrigin="0.389,0.522" TextChanged="Generation_Number_TextChanged"/>
         </Border>
 
-        <ComboBox HorizontalAlignment="Left" Height="26" Margin="233,184,0,0" VerticalAlignment="Top" Width="123" Grid.Column="2" Grid.Row="1"/>
+        <ComboBox x:Name="Selection_Method" HorizontalAlignment="Left" Height="26" Margin="233,184,0,0" VerticalAlignment="Top" Width="131" Grid.Column="2" Grid.Row="1" SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding Combobox_SelectionMethods}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding MethodName}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
 
         <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="120" Margin="906,297,0,0" Grid.Row="1" VerticalAlignment="Top" Width="825"/>
         <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="497" Margin="10,37,0,0" VerticalAlignment="Top" Width="896" Grid.RowSpan="2">

@@ -52,6 +52,19 @@ namespace Genetic
         //--// Bit 6: Reserve
         //--// Bit 7: Reserve
 
+        //Structure for the combobox
+        public struct Selection_Method_Struct
+        {
+            public string MethodName { get; set; }
+            public int MethodIndex { get; set; }
+
+            public Selection_Method_Struct(string Name, int Index)
+            {
+                MethodName = Name;
+                MethodIndex = Index;
+            }     
+        }
+
         //See if there are any subscribers and fire the event
         protected virtual void OnDataTested()
         {
@@ -113,6 +126,13 @@ namespace Genetic
             World.iWolrdIndex = 1;
             World.iWorldGenerations = 5;
             RefreshNeeded = false;
+
+            List<Selection_Method_Struct> Combobox_SelectionMethods = new List<Selection_Method_Struct>();
+            Combobox_SelectionMethods.Add(new Selection_Method_Struct("Biased Roulette [BR]",1));
+            Combobox_SelectionMethods.Add(new Selection_Method_Struct("Tournament [T]", 1));
+            Combobox_SelectionMethods.Add(new Selection_Method_Struct("Mixed selection [BR + T]", 1));
+
+            Selection_Method.ItemsSource = Combobox_SelectionMethods;
 
             //Create a subscription
             DataTested += HandleDataTested;
@@ -499,6 +519,11 @@ namespace Genetic
             {
                 Results_Windows.Text = "Parameters not in order";
             }
+
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
 
         }
     }
