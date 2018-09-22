@@ -28,6 +28,8 @@ namespace Genetic
         public static bool bAllowInnBreeding { get; set; }
         //Wolrd index
         public static int iWolrdIndex { get; set; }
+        //Number of generations in the world
+        public static int iWorldGenerations { get; set; }
 
         //Random numbers
         static Random r = new Random();
