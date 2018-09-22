@@ -32,6 +32,8 @@ namespace Genetic
         public static int iWorldGenerations { get; set; }
         //Method of selection (1 = biased roulette, 2 = Tournament, 3 = Combined Biased+Tournament)
         public static int iSelectedMethod { get; set; }
+        //Number of parameters used
+        public static int iNumberOfParameters { get; set; }
 
         //Random numbers
         static Random r = new Random();

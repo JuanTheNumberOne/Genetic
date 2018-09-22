@@ -125,6 +125,7 @@ namespace Genetic
             World.bAllowInnBreeding = false;
             World.iWolrdIndex = 1;
             World.iWorldGenerations = 5;
+            World.iNumberOfParameters = 2;
             RefreshNeeded = false;
 
             List<Selection_Method_Struct> Combobox_SelectionMethods = new List<Selection_Method_Struct>();
@@ -469,6 +470,7 @@ namespace Genetic
                 int.TryParse(textBox.Text, out TryParse_Out);
                 World.iWorldGenerations = TryParse_Out;
                 arboAlgorithmParams_OK[0] = true;
+                Results_Windows.Text = "";
             }
             else
             {
@@ -497,19 +499,10 @@ namespace Genetic
 
         }
 
-        //DATABASE AREA
-        ///////////////////////////////////
-        private void RecordIndividual(Individual Idividual_Recorded, int World_Numer, int Generation_Number)
-        {
-            Royal_Scribe = new Evolution_History_Scribe();
-            Individual _Idividual_Recorded = Idividual_Recorded;
-            Royal_Scribe.Add_Individual_Record(_Idividual_Recorded, Generation_Number, World_Numer);
-        }
-
         private void Check_Inputs_Click(object sender, RoutedEventArgs e)
         {
             bool hue;
-            hue = Check_Input_Parameters(arboAlgorithmParams_OK, 1);
+            hue = Check_Input_Parameters(arboAlgorithmParams_OK, World.iNumberOfParameters);
 
             if (hue)
             {
@@ -526,7 +519,19 @@ namespace Genetic
         {
             Selection_Method_Struct Method_Selected = (Selection_Method_Struct)Selection_Method.SelectedItem;
             World.iSelectedMethod = Method_Selected.MethodIndex;
+            //Method selected
+            arboAlgorithmParams_OK[1] = true;
 
         }
+
+        //DATABASE AREA
+        ///////////////////////////////////
+        private void RecordIndividual(Individual Idividual_Recorded, int World_Numer, int Generation_Number)
+        {
+            Royal_Scribe = new Evolution_History_Scribe();
+            Individual _Idividual_Recorded = Idividual_Recorded;
+            Royal_Scribe.Add_Individual_Record(_Idividual_Recorded, Generation_Number, World_Numer);
+        }
+
     }
 }
