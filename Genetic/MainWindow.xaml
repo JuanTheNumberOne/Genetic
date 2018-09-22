@@ -16,41 +16,56 @@
             <ColumnDefinition Width="225*"/>
             <ColumnDefinition Width="143*"/>
         </Grid.ColumnDefinitions>
-        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="148" Margin="906,269,0,0" Grid.Row="1" VerticalAlignment="Top" Width="825"/>
 
-
-
-        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="497" Margin="10,37,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="1721"/>
-
-
-
-        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="349" Margin="906,37,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="825">
-            <ListView x:Name="Controllers_In_Network_List" Height="204" Margin="49,31,50,0" Width="724" MouseDoubleClick="Controllers_In_Network_List_MouseDoubleClick" Tag="{Binding ControllerInfo}" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="ID" Width="30 " DisplayMemberBinding="{Binding Id}"/>
-                        <GridViewColumn Header="Avaibility" Width="110" DisplayMemberBinding="{Binding Availability}"/>
-                        <GridViewColumn Header="Is Virtual" Width="85" DisplayMemberBinding="{Binding IsVirtual}"/>
-                        <GridViewColumn Header="System Name" Width="110" DisplayMemberBinding="{Binding SystemName}"/>
-                        <GridViewColumn Header="Version" Width="90" DisplayMemberBinding="{Binding Version}"/>
-                        <GridViewColumn Header="Controller Name" Width="150" DisplayMemberBinding="{Binding ControllerName}"/>
-                        <GridViewColumn Header="IP adress" Width="140" DisplayMemberBinding="{Binding IPAddress}"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+        <Label Content="Number of generations" HorizontalAlignment="Left" Height="28" Margin="82,163,0,0" VerticalAlignment="Top" Width="139" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="2" Grid.Row="1"/>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="377" Margin="906,37,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="825">
+            <TextBox x:Name="Generation_Number" HorizontalAlignment="Left" Height="23" Margin="243,264,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="42" RenderTransformOrigin="0.389,0.522" TextChanged="Generation_Number_TextChanged"/>
         </Border>
 
+        <ComboBox HorizontalAlignment="Left" Height="26" Margin="233,184,0,0" VerticalAlignment="Top" Width="123" Grid.Column="2" Grid.Row="1"/>
 
-
-        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="497" Margin="10,37,0,0" VerticalAlignment="Top" Width="896" Grid.RowSpan="2"/>
-
-
-
+        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="120" Margin="906,297,0,0" Grid.Row="1" VerticalAlignment="Top" Width="825"/>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="497" Margin="10,37,0,0" VerticalAlignment="Top" Width="896" Grid.RowSpan="2">
+        </Border>
         <Label Content="Display 1 (Default: First Generation)" HorizontalAlignment="Left" Height="28" Margin="351,36,0,0" VerticalAlignment="Top" Width="199" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="1"/>
         <Label Content="Display 2 (Default: Last Generation)" HorizontalAlignment="Left" Height="28" Margin="351,167.5,0,0" VerticalAlignment="Top" Width="199" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="1" Grid.Row="1"/>
-        <TextBox x:Name="Results_Windows" HorizontalAlignment="Left" Height="66" Margin="956,335,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="717" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"/>
-        <Button x:Name="Let_There_Be_Light" Content="Let There be light" HorizontalAlignment="Left" Height="39" Margin="499,176,0,0" VerticalAlignment="Top" Width="151" Click="Let_There_Be_Light_Click" FontSize="16" FontWeight="Bold" Grid.Column="2" Grid.Row="1"/>
-        <Button x:Name="Scanner" Content="Scan for controllers" HorizontalAlignment="Left" Height="39" Margin="10,176,0,0" VerticalAlignment="Top" Width="135" Click="Scanner_Click" Grid.Column="2" Grid.Row="1"/>
+        <TextBox x:Name="Results_Windows" HorizontalAlignment="Left" Height="66" Margin="949,330,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="724" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"/>
+        <Button x:Name="Let_There_Be_Light" Content="Let There be light" HorizontalAlignment="Left" Height="40" Margin="458,248,0,0" VerticalAlignment="Top" Width="151" Click="Let_There_Be_Light_Click" FontSize="16" FontWeight="Bold" Grid.Column="2" Grid.Row="1"/>
+        <Button x:Name="Scanner" Content="Scan for controllers" HorizontalAlignment="Left" Height="40" Margin="949,161,0,0" VerticalAlignment="Top" Width="108" Click="Scanner_Click" Grid.Column="1" Grid.Row="1" RenderTransformOrigin="-0.307,0.397"/>
+        <ListView x:Name="Parameters_View_Old" HorizontalAlignment="Center" Height="200" VerticalAlignment="Top" Width="860" Grid.Column="1" Margin="29,200.5,175,0" Grid.Row="1">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Movement Type" Width="100" DisplayMemberBinding="{Binding iMovementType}"/>
+                    <GridViewColumn Header="Speed" Width="110" DisplayMemberBinding="{Binding iSpeed}"/>
+                    <GridViewColumn Header="Zone" Width="85" DisplayMemberBinding="{Binding iZone}"/>
+                    <GridViewColumn Header="Acc" Width="70" DisplayMemberBinding="{Binding iAcceleration}"/>
+                    <GridViewColumn Header="Acc_Ramp" Width="70" DisplayMemberBinding="{Binding iAcceleration_Ramp}"/>
+                    <GridViewColumn Header="Fitness Score" Width="90" DisplayMemberBinding="{Binding dFitnessScore}"/>
+                    <GridViewColumn Header="Weighted Fitness Score" Width="90" DisplayMemberBinding="{Binding dWeightedFitnessValue}"/>
+                    <GridViewColumn Header="Time Elapsed" Width="90" DisplayMemberBinding="{Binding dTime}"/>
+                    <GridViewColumn Header="DNA" Width="150" DisplayMemberBinding="{Binding DNA_Code}"/>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="Start" Content="Start Rapid" HorizontalAlignment="Left" Height="39" Margin="950,206,0,0" VerticalAlignment="Top" Width="107" Click="Start_Click" Grid.Column="1" Grid.Row="1"/>
+        <Button x:Name="Stop" Content="Stop Rapid" HorizontalAlignment="Left" Height="39" Margin="950,250,0,0" VerticalAlignment="Top" Width="108" Click="Stop_Click" Grid.Column="1" Grid.Row="1"/>
+        <Label Grid.ColumnSpan="2" Content="GENERATION DISPLAY" HorizontalAlignment="Left" Height="39" Margin="10,4,0,0" VerticalAlignment="Top" Width="206" FontSize="18" FontWeight="Bold"/>
+        <Label Content="Message Output" HorizontalAlignment="Left" Height="28" Margin="957,302,0,0" VerticalAlignment="Top" Width="199" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"/>
+        <Label Content="Controllers in network display" HorizontalAlignment="Left" Height="28" Margin="956,37,0,0" VerticalAlignment="Top" Width="200" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <ListView x:Name="Controllers_In_Network_List" Height="204" Margin="949,69,68,0" Width="724" MouseDoubleClick="Controllers_In_Network_List_MouseDoubleClick" Tag="{Binding ControllerInfo}" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.RowSpan="2">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" Width="30 " DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="Avaibility" Width="110" DisplayMemberBinding="{Binding Availability}"/>
+                    <GridViewColumn Header="Is Virtual" Width="85" DisplayMemberBinding="{Binding IsVirtual}"/>
+                    <GridViewColumn Header="System Name" Width="110" DisplayMemberBinding="{Binding SystemName}"/>
+                    <GridViewColumn Header="Version" Width="90" DisplayMemberBinding="{Binding Version}"/>
+                    <GridViewColumn Header="Controller Name" Width="150" DisplayMemberBinding="{Binding ControllerName}"/>
+                    <GridViewColumn Header="IP adress" Width="140" DisplayMemberBinding="{Binding IPAddress}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
         <ListView x:Name="Parameters_View" HorizontalAlignment="Center" Height="204" Margin="29,69,175,0" VerticalAlignment="Top" Width="860" Grid.Column="1" Grid.RowSpan="2">
             <ListView.View>
                 <GridView>
@@ -67,29 +82,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListView x:Name="Parameters_View_Old" HorizontalAlignment="Center" Height="200" VerticalAlignment="Top" Width="860" Grid.Column="1" Margin="29,200.5,175,0" MouseDoubleClick="Parameters_View_Old_MouseDoubleClick" Grid.Row="1">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Movement Type" Width="100" DisplayMemberBinding="{Binding iMovementType}"/>
-                    <GridViewColumn Header="Speed" Width="110" DisplayMemberBinding="{Binding iSpeed}"/>
-                    <GridViewColumn Header="Zone" Width="85" DisplayMemberBinding="{Binding iZone}"/>
-                    <GridViewColumn Header="Acc" Width="70" DisplayMemberBinding="{Binding iAcceleration}"/>
-                    <GridViewColumn Header="Acc_Ramp" Width="70" DisplayMemberBinding="{Binding iAcceleration_Ramp}"/>
-                    <GridViewColumn Header="Fitness Score" Width="90" DisplayMemberBinding="{Binding dFitnessScore}"/>
-                    <GridViewColumn Header="Weighted Fitness Score" Width="90" DisplayMemberBinding="{Binding dWeightedFitnessValue}"/>
-                    <GridViewColumn Header="Time Elapsed" Width="90" DisplayMemberBinding="{Binding dTime}"/>
-                    <GridViewColumn Header="DNA" Width="150" DisplayMemberBinding="{Binding DNA_Code}"/>
-
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Button x:Name="Start" Content="Start Rapid" HorizontalAlignment="Left" Height="39" Margin="165,176,0,0" VerticalAlignment="Top" Width="134" Click="Start_Click" Grid.Column="2" Grid.Row="1"/>
-        <Button x:Name="Stop" Content="Stop Rapid" HorizontalAlignment="Left" Height="39" Margin="331,176,0,0" VerticalAlignment="Top" Width="136" Click="Stop_Click" Grid.Column="2" Grid.Row="1"/>
-        <Label Grid.ColumnSpan="2" Content="GENERATION DISPLAY" HorizontalAlignment="Left" Height="39" Margin="10,0,0,0" VerticalAlignment="Top" Width="206" FontSize="18" FontWeight="Bold"/>
-        <Label Content="Message Output" HorizontalAlignment="Left" Height="28" Margin="957,302,0,0" VerticalAlignment="Top" Width="199" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"/>
-        <Label Content="Controllers in network display" HorizontalAlignment="Left" Height="28" Margin="956,37,0,0" VerticalAlignment="Top" Width="200" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="1" Grid.ColumnSpan="2"/>
-
-
-
+        <Button x:Name="Check_Inputs" Content="Check input parameters" HorizontalAlignment="Left" Height="39" Margin="82,250,0,0" VerticalAlignment="Top" Width="151" Click="Check_Inputs_Click" Grid.Column="2" Grid.Row="1"/>
+        <Label Content="Selection method" HorizontalAlignment="Left" Height="28" Margin="226,163,0,0" VerticalAlignment="Top" Width="106" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="2" Grid.Row="1"/>
     </Grid>
 </Window>
