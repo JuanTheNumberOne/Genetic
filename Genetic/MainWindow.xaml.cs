@@ -40,6 +40,18 @@ namespace Genetic
         //Scribe to record and read the evolution history. He is the sole and unique witness of this universe.
         private Evolution_History_Scribe Royal_Scribe;
 
+        //Byre that indicates if the input parameters are right. // 0 Wrong parameter ; 1 right parameter
+        private bool[] arboAlgorithmParams_OK = new bool[8];
+        //--// BIT VALUES //--//
+        //--// Bit 0: Generation number
+        //--// Bit 1: Selected artificial selection method
+        //--// Bit 2: Mutation rate
+        //--// Bit 3: Breeding rate
+        //--// Bit 4: Reserve
+        //--// Bit 5: Reserve
+        //--// Bit 6: Reserve
+        //--// Bit 7: Reserve
+
         //See if there are any subscribers and fire the event
         protected virtual void OnDataTested()
         {
@@ -99,15 +111,11 @@ namespace Genetic
             World.dMutationChance = 50;
             World.bAllowInnBreeding = false;
             World.iWolrdIndex = 1;
+            World.iWorldGenerations = 5;
             RefreshNeeded = false;
 
             //Create a subscription
             DataTested += HandleDataTested;
-
-            //Start reading in the background when the times from the robot is ready to read
-            //Task ReadTimes = new Task(new Action(IsDataReady));
-            //ReadTimes = new Task(new Action(IsDataReady));
-            //ReadTimes.Start();
         }
 
         //ABB INTERFACE AND DATA EXCHANGE AREA
@@ -197,29 +205,7 @@ namespace Genetic
 
         //GENETIC ALGORITH ML AREA
         ///////////////////////////////////
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-            //Create a population and display it
-            World.CreateGeneration(World.PopulationSize);
-            Parameters_View.ItemsSource = World.Population;
-
-        }
-
-        private void Kill_Individual_Click(object sender, RoutedEventArgs e)
-        {
-            World.KillIndividual(Parameters_View.SelectedIndex);
-            //Refresh the list
-            Parameters_View.ItemsSource = null;
-            Parameters_View.ItemsSource = World.Population;
-        }
-
-        private void CheckValue(object sender, TextCompositionEventArgs e)
-        {
-            var textBox = sender as TextBox;
-            e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
-
-        }
+ 
 
         private void CheckPopulation_Click(object sender, RoutedEventArgs e)
         {
@@ -337,8 +323,10 @@ namespace Genetic
 
         private void Let_There_Be_Light_Click(object sender, RoutedEventArgs e)
         {
+
             //Check if a controller is selected for the algorithm
-            if (_Scanner.controller !=null)
+            
+            if (_Scanner.controller !=null && Check_Input_Parameters(arboAlgorithmParams_OK,1))
             {
                 //And there was light
                 Results_Windows.Text = "AND THERE WAS LIGHT... ";
@@ -358,8 +346,8 @@ namespace Genetic
                 ReadTimes = new Task(new Action(IsDataReady));
                 ReadTimes.Start();
 
-                //Here begin looping for x generations
-                for (int i = 1; i < 5; i++)
+                //Here begin looping for x generations defined in the world
+                for (int i = 1; i < World.iWorldGenerations; i++)
                 {
 
                     //Wait until paralell task has detected and read avaible data
@@ -434,10 +422,6 @@ namespace Genetic
  
         }
 
-        private void Parameters_View_Old_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
-        }
 
         private void WriteDataToRobot()
         {
@@ -451,28 +435,71 @@ namespace Genetic
         }
 
 
-
-        private void Insert_Click(object sender, RoutedEventArgs e)
+        //INPUT PARAMETERS FILTER
+        private void Generation_Number_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Royal_Scribe = new Evolution_History_Scribe();
-            Individual _Ind = new Individual()
-            {
-                DNA_Code = "1785,14,5,9",
-                dFitnessScore = (decimal)0.56,
-                dWeightedFitnessValue = (decimal)0.6,
-                dTime = (decimal)0.67
+            //Get the object
+            var textBox = sender as TextBox;
+            e.Handled = Regex.IsMatch(textBox.Text, "[^0-9]+");
+            int TryParse_Out = 0;
 
-            };
-            Royal_Scribe.Add_Individual_Record(_Ind,1,1);
-            
+            //If the input is correct update its value to the world
+            if (e.Handled == false)
+            {
+                int.TryParse(textBox.Text, out TryParse_Out);
+                World.iWorldGenerations = TryParse_Out;
+                arboAlgorithmParams_OK[0] = true;
+            }
+            else
+            {
+                Results_Windows.Text = "Wrong number of generations. Must be a natural number";
+                arboAlgorithmParams_OK[0] = false;
+            }
 
         }
 
+        private bool Check_Input_Parameters(bool[] input_table, int parameters_used)
+        {
+            bool[] _input_table = input_table;
+            bool Parameters_Ok = false;
+            int _parameters_used = parameters_used;
+            int _parameters_right_count = 0;
+
+            for (int i = 0; i < _input_table.Length; i++)
+            {
+                if (_input_table[i])
+                {
+                    _parameters_right_count++;
+                }
+            }
+
+            return Parameters_Ok = (_parameters_right_count == _parameters_used) ? true : false;
+
+        }
+
+        //DATABASE AREA
+        ///////////////////////////////////
         private void RecordIndividual(Individual Idividual_Recorded, int World_Numer, int Generation_Number)
         {
             Royal_Scribe = new Evolution_History_Scribe();
             Individual _Idividual_Recorded = Idividual_Recorded;
             Royal_Scribe.Add_Individual_Record(_Idividual_Recorded, Generation_Number, World_Numer);
+        }
+
+        private void Check_Inputs_Click(object sender, RoutedEventArgs e)
+        {
+            bool hue;
+            hue = Check_Input_Parameters(arboAlgorithmParams_OK, 1);
+
+            if (hue)
+            {
+                Results_Windows.Text = "Parameters in order";
+            }
+            else
+            {
+                Results_Windows.Text = "Parameters not in order";
+            }
+
         }
     }
 }
