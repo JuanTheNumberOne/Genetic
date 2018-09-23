@@ -212,8 +212,7 @@ namespace Genetic
                         //Sort by fitness score
                         //World.Population.Sort((x, y) => y.dFitnessScore.CompareTo(x.dFitnessScore));
                         DataReadyToRead = false;
-                        RefreshNeeded = true;
-                        
+                        RefreshNeeded = true;                  
                     }
                 }
                 else
@@ -221,7 +220,6 @@ namespace Genetic
                     //do nothing
                 }
             }
-            Thread.Sleep(0);
         }
 
         //GENETIC ALGORITH ML AREA
@@ -459,25 +457,71 @@ namespace Genetic
         //INPUT PARAMETERS FILTER
         private void Generation_Number_TextChanged(object sender, TextChangedEventArgs e)
         {
+            string MessageOutput = "Wrong number of generations. Must be a natural number";
+            Check_Numeric_Input(sender, e, 1, MessageOutput);
+        }
+
+        private void Mutation_Rate_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string MessageOutput = "Wrong mutation rate. Must be between 0 and 100 (decimals with max. 2 digits after the coma: example => 1,23 or 1.23)";
+            Check_Numeric_Input(sender, e, 2, MessageOutput);
+        }
+
+        private void Breeding_Rate_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string MessageOutput = MessageOutput = "Wrong breeding rate. Must be between 0 and 100 (natural numbers)";
+            Check_Numeric_Input(sender, e, 3, MessageOutput);
+        }
+
+        private void Check_Numeric_Input(object sender, TextChangedEventArgs e, int Input_Index, string MessageOutput)
+        {
             //Get the object
             var textBox = sender as TextBox;
-            e.Handled = Regex.IsMatch(textBox.Text, "[^0-9]+");
-            int TryParse_Out = 0;
+            //Regex token for integers
+            bool bNotSomeNotNumbers = Regex.IsMatch(textBox.Text, @"^\d+$");
+            //Regex token for decimal x.xx
+            bool IsDecimal_2digits = Regex.IsMatch(textBox.Text, @"^\d{1,3}[\.\,]\d{1,2}$");
 
-            //If the input is correct update its value to the world
-            if (e.Handled == false)
+            int TryParse_Out = 0;
+            decimal TryParse_Out_d = 0;
+
+            int _Input_Index = Input_Index;
+            string _MessageOutput = MessageOutput;
+
+            if (bNotSomeNotNumbers && (_Input_Index == 1 || _Input_Index == 3))
             {
                 int.TryParse(textBox.Text, out TryParse_Out);
-                World.iWorldGenerations = TryParse_Out;
+                if (_Input_Index == 1)
+                {
+                    World.iWorldGenerations = TryParse_Out;
+                    MessageOutput = "";
+                }
+                else
+                {
+                   MessageOutput = TryParse_Out > 100 ? "Rate input greater than 100, set at 100" : "";
+                   TryParse_Out = TryParse_Out > 100 ? 100 : TryParse_Out;
+                   World.iBreedingChance = TryParse_Out;
+                }
+                
                 arboAlgorithmParams_OK[0] = true;
-                Results_Windows.Text = "";
+                
+            }
+
+            else if (IsDecimal_2digits && _Input_Index == 2)
+            {
+                MessageOutput = "";
+                decimal.TryParse(textBox.Text, out TryParse_Out_d);
+                MessageOutput = TryParse_Out_d > 100 ? "Rate input greater than 100, set at 100" : "";
+                TryParse_Out_d = TryParse_Out_d > 100 ? 100 : TryParse_Out_d;
+                World.dMutationChance = (double)TryParse_Out_d;
+                arboAlgorithmParams_OK[0] = true; 
             }
             else
             {
-                Results_Windows.Text = "Wrong number of generations. Must be a natural number";
                 arboAlgorithmParams_OK[0] = false;
             }
-
+           
+            Results_Windows.Text = MessageOutput;
         }
 
         private bool Check_Input_Parameters(bool[] input_table, int parameters_used)
@@ -532,6 +576,5 @@ namespace Genetic
             Individual _Idividual_Recorded = Idividual_Recorded;
             Royal_Scribe.Add_Individual_Record(_Idividual_Recorded, Generation_Number, World_Numer);
         }
-
     }
 }

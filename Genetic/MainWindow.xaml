@@ -17,12 +17,15 @@
             <ColumnDefinition Width="143*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Content="Number of generations" HorizontalAlignment="Left" Height="28" Margin="82,163,0,0" VerticalAlignment="Top" Width="139" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="2" Grid.Row="1"/>
-        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="377" Margin="906,37,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="825">
-            <TextBox x:Name="Generation_Number" HorizontalAlignment="Left" Height="23" Margin="243,264,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="42" RenderTransformOrigin="0.389,0.522" TextChanged="Generation_Number_TextChanged"/>
-        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="497" Margin="10,37,0,0" VerticalAlignment="Top" Width="896" Grid.RowSpan="2"/>
 
-        <ComboBox x:Name="Selection_Method" HorizontalAlignment="Left" Height="26" Margin="233,184,0,0" VerticalAlignment="Top" Width="131" Grid.Column="2" Grid.Row="1" SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding Combobox_SelectionMethods}">
+        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="377" Margin="906,37,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="825"/>
+        <TextBox x:Name="Generation_Number" HorizontalAlignment="Left" Height="23" Margin="172,168,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.389,0.522" TextChanged="Generation_Number_TextChanged" Grid.Row="1" Grid.Column="2"/>
+
+
+        <Label Content="Number of generations" HorizontalAlignment="Left" Height="28" Margin="24,168,0,0" VerticalAlignment="Top" Width="139" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="2" Grid.Row="1"/>
+
+        <ComboBox x:Name="Selection_Method" HorizontalAlignment="Left" Height="26" Margin="172,248,0,0" VerticalAlignment="Top" Width="131" Grid.Column="2" Grid.Row="1" SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding Combobox_SelectionMethods}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -33,12 +36,10 @@
         </ComboBox>
 
         <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="120" Margin="906,297,0,0" Grid.Row="1" VerticalAlignment="Top" Width="825"/>
-        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="497" Margin="10,37,0,0" VerticalAlignment="Top" Width="896" Grid.RowSpan="2">
-        </Border>
         <Label Content="Display 1 (Default: First Generation)" HorizontalAlignment="Left" Height="28" Margin="351,36,0,0" VerticalAlignment="Top" Width="199" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="1"/>
         <Label Content="Display 2 (Default: Last Generation)" HorizontalAlignment="Left" Height="28" Margin="351,167.5,0,0" VerticalAlignment="Top" Width="199" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="1" Grid.Row="1"/>
         <TextBox x:Name="Results_Windows" HorizontalAlignment="Left" Height="66" Margin="949,330,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="724" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"/>
-        <Button x:Name="Let_There_Be_Light" Content="Let There be light" HorizontalAlignment="Left" Height="40" Margin="458,248,0,0" VerticalAlignment="Top" Width="151" Click="Let_There_Be_Light_Click" FontSize="16" FontWeight="Bold" Grid.Column="2" Grid.Row="1"/>
+        <Button x:Name="Let_There_Be_Light" Content="Let There be light" HorizontalAlignment="Left" Height="40" Margin="340,236,0,0" VerticalAlignment="Top" Width="151" Click="Let_There_Be_Light_Click" FontSize="16" FontWeight="Bold" Grid.Column="2" Grid.Row="1"/>
         <Button x:Name="Scanner" Content="Scan for controllers" HorizontalAlignment="Left" Height="40" Margin="949,161,0,0" VerticalAlignment="Top" Width="108" Click="Scanner_Click" Grid.Column="1" Grid.Row="1" RenderTransformOrigin="-0.307,0.397"/>
         <ListView x:Name="Parameters_View_Old" HorizontalAlignment="Center" Height="200" VerticalAlignment="Top" Width="860" Grid.Column="1" Margin="29,200.5,175,0" Grid.Row="1">
             <ListView.View>
@@ -90,7 +91,11 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="Check_Inputs" Content="Check input parameters" HorizontalAlignment="Left" Height="39" Margin="82,250,0,0" VerticalAlignment="Top" Width="151" Click="Check_Inputs_Click" Grid.Column="2" Grid.Row="1"/>
-        <Label Content="Selection method" HorizontalAlignment="Left" Height="28" Margin="226,163,0,0" VerticalAlignment="Top" Width="106" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="2" Grid.Row="1"/>
+        <Button x:Name="Check_Inputs" Content="Check input parameters" HorizontalAlignment="Left" Height="38" Margin="340,177,0,0" VerticalAlignment="Top" Width="151" Click="Check_Inputs_Click" Grid.Column="2" Grid.Row="1"/>
+        <Label Content="Selection method" HorizontalAlignment="Left" Height="28" Margin="24,248,0,0" VerticalAlignment="Top" Width="106" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="2" Grid.Row="1"/>
+        <Label Content="Mutation rate" HorizontalAlignment="Left" Height="28" Margin="24,193,0,0" VerticalAlignment="Top" Width="106" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="2" Grid.Row="1"/>
+        <Label Content="Breeding rate" HorizontalAlignment="Left" Height="28" Margin="24,221,0,0" VerticalAlignment="Top" Width="106" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="2" Grid.Row="1"/>
+        <TextBox x:Name="Mutation_Rate" HorizontalAlignment="Left" Height="22" Margin="172,197,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.389,0.522" TextChanged="Mutation_Rate_TextChanged" Grid.Row="1" Grid.Column="2"/>
+        <TextBox x:Name="Breeding_Rate" HorizontalAlignment="Left" Height="23" Margin="172,223,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.389,0.522" TextChanged="Breeding_Rate_TextChanged" Grid.Row="1" Grid.Column="2"/>
     </Grid>
 </Window>
