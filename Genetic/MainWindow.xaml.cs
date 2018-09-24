@@ -50,7 +50,7 @@ namespace Genetic
         //--// Bit 1: Selected artificial selection method
         //--// Bit 2: Mutation rate
         //--// Bit 3: Breeding rate
-        //--// Bit 4: Reserve
+        //--// Bit 4: Poupulation number
         //--// Bit 5: Reserve
         //--// Bit 6: Reserve
         //--// Bit 7: Reserve
