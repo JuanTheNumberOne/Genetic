@@ -128,7 +128,7 @@ namespace Genetic
             World.bAllowInnBreeding = false;
             World.iWolrdIndex = 1;
             World.iWorldGenerations = 5;
-            World.iNumberOfParameters = 2;
+            World.iNumberOfParameters = 4;
             RefreshNeeded = false;
             Input_Checked = true;
 
@@ -349,7 +349,7 @@ namespace Genetic
 
             //Check if a controller is selected for the algorithm
             
-            if (_Scanner.controller !=null && Check_Input_Parameters(arboAlgorithmParams_OK,1))
+            if (_Scanner.controller !=null && Check_Input_Parameters(arboAlgorithmParams_OK,4))
             {
                 //And there was light
                 Results_Windows.Text = "AND THERE WAS LIGHT... ";
@@ -390,7 +390,7 @@ namespace Genetic
                     }
 
                     //Display first generation in the window
-                    if (i == 0)
+                    if (i == 1)
                     {
                         Refresh_Old_List();
                     }
@@ -440,7 +440,7 @@ namespace Genetic
             }
             else
             {
-                Results_Windows.Text = "No controller selected";
+                Results_Windows.Text = "No controller selected or parameters not in order";
             }
  
         }
@@ -505,18 +505,19 @@ namespace Genetic
                         World.iWorldGenerations = TryParse_Out;
                         Number_Generations_Used.Content = TryParse_Out;
                         MessageOutput = "";
+                        arboAlgorithmParams_OK[0] = true;
                         Input_Checked = true;
                     }
                     else
                     {
                        MessageOutput = TryParse_Out > 100 ? "Rate input greater than 100, set at 100" : "";
                        TryParse_Out = TryParse_Out > 100 ? 100 : TryParse_Out;
+                       Breeding_Rate_Used.Content = TryParse_Out;
                        World.iBreedingChance = TryParse_Out;
+                       arboAlgorithmParams_OK[3] = true;
                        Input_Checked = true;
                     }
-                
-                    arboAlgorithmParams_OK[0] = true;
-                
+
                 }
 
                 else if ((IsDecimal_2digits || bNotSomeNotNumbers || IsDecimal_0digits) && _Input_Index == 2)
@@ -525,15 +526,32 @@ namespace Genetic
                     decimal.TryParse(textBox.Text, out TryParse_Out_d);
                     MessageOutput = TryParse_Out_d > 100 ? "Rate input greater than 100, set at 100" : "";
                     TryParse_Out_d = TryParse_Out_d > 100 ? 100 : TryParse_Out_d;
+                    Mutation_Rate_Used.Content = (double)TryParse_Out_d;
                     World.dMutationChance = (double)TryParse_Out_d;
-                    arboAlgorithmParams_OK[0] = true;
+                    arboAlgorithmParams_OK[2] = true;
                     Input_Checked = true;
                 }
                 else
                 {
-                    arboAlgorithmParams_OK[0] = false;
+                    
                     text = text.Remove(text.Length - 1);
-                    Number_Generations_Used.Content = "Error";
+                    switch (_Input_Index)
+                    {
+                        case 1:
+                            Number_Generations_Used.Content = "Error";
+                            arboAlgorithmParams_OK[0] = false;
+                            break;
+                        case 2:
+                            Mutation_Rate_Used.Content = "Error";
+                            arboAlgorithmParams_OK[2] = false;
+                            break;
+                        case 3:
+                            Breeding_Rate_Used.Content = "Error";
+                            arboAlgorithmParams_OK[3] = false;
+                            break;
+                        default:
+                            break;
+                    }
                     Input_Checked = false;
                     textBox.Text = text;
                 }
@@ -541,7 +559,20 @@ namespace Genetic
             else
             {
                 Input_Checked = true;
-                Number_Generations_Used.Content = "Error";
+                switch (_Input_Index)
+                {
+                    case 1:
+                        Number_Generations_Used.Content = "Error";
+                        break;
+                    case 2:
+                        Mutation_Rate_Used.Content = "Error";
+                        break;
+                    case 3:
+                        Breeding_Rate_Used.Content = "Error";
+                        break;    
+                    default:
+                        break;
+                }
             }
 
             Results_Windows.Text = MessageOutput;         
@@ -569,6 +600,7 @@ namespace Genetic
         private void Check_Inputs_Click(object sender, RoutedEventArgs e)
         {
             bool hue;
+            string NotInOrder = "Parameters not in order: ";
             hue = Check_Input_Parameters(arboAlgorithmParams_OK, World.iNumberOfParameters);
 
             if (hue)
@@ -577,7 +609,11 @@ namespace Genetic
             }
             else
             {
-                Results_Windows.Text = "Parameters not in order";
+                NotInOrder = arboAlgorithmParams_OK[0] == false?  NotInOrder + "Wrong generation number; ": NotInOrder;
+                NotInOrder = arboAlgorithmParams_OK[1] == false ? NotInOrder + "No method chosen; "       : NotInOrder;
+                NotInOrder = arboAlgorithmParams_OK[2] == false ? NotInOrder + "Wrong mutation rate; "    : NotInOrder;
+                NotInOrder = arboAlgorithmParams_OK[3] == false ? NotInOrder + "Wrong breeding rate; "    : NotInOrder;
+                Results_Windows.Text = NotInOrder;
             }
 
         }
