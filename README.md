@@ -19,10 +19,10 @@ For n points, the number of worlds will be n-1. Each world has a population of i
 
 Disclaimer:
 The aim of this app is to test whether it is possible to apply such algorithm to an indsutrial robot. Therefore it is not meant for commercial use or any
-other proffesional applications. It is only for research purposses and the results should be treated accordingly.
+other professional applications. It is only for research purposses and the results should be treated accordingly.
 
 The code is open source, so use it as you like. The creator (me, Jan Zalewski :D) does not take resposibility of the results or any damage that can arise from 
-the use of this software. Remember that industrial robots are dangerous machines and should be treated with caution and ensuring common sense and neccesary 
+the use of this software. Remember that industrial robots are dangerous machines and should be treated with caution and ensuring that common sense and neccesary 
 safety measures are applied.
 
 More info:
