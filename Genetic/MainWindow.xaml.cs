@@ -33,6 +33,9 @@ namespace Genetic
         //This class also serves as the interface point between the ABB controller and the GA app
         private Network_Scanner _Scanner = new Network_Scanner();
 
+        //Allows to/not repeat the inputdatacheck
+        private bool Input_Checked;
+
         //Delegate to raise the event of data ready to read instead of waiting in a loop
         public delegate void RobotHasTestedIndividuals(); //This is the pointer class to the method
         public event RobotHasTestedIndividuals DataTested;   //Define the event that calls the delegate
@@ -127,6 +130,7 @@ namespace Genetic
             World.iWorldGenerations = 5;
             World.iNumberOfParameters = 2;
             RefreshNeeded = false;
+            Input_Checked = true;
 
             List<Selection_Method_Struct> Combobox_SelectionMethods = new List<Selection_Method_Struct>();
             Combobox_SelectionMethods.Add(new Selection_Method_Struct("Biased Roulette [BR]",1));
@@ -481,6 +485,8 @@ namespace Genetic
             bool bNotSomeNotNumbers = Regex.IsMatch(textBox.Text, @"^\d+$");
             //Regex token for decimal x.xx
             bool IsDecimal_2digits = Regex.IsMatch(textBox.Text, @"^\d{1,3}[\.\,]\d{1,2}$");
+            bool IsDecimal_0digits = Regex.IsMatch(textBox.Text, @"^\d{1,3}[\.\,]$");
+            string text = textBox.Text;
 
             int TryParse_Out = 0;
             decimal TryParse_Out_d = 0;
@@ -488,40 +494,57 @@ namespace Genetic
             int _Input_Index = Input_Index;
             string _MessageOutput = MessageOutput;
 
-            if (bNotSomeNotNumbers && (_Input_Index == 1 || _Input_Index == 3))
+            if (Input_Checked == true && text.Length >= 1)
             {
-                int.TryParse(textBox.Text, out TryParse_Out);
-                if (_Input_Index == 1)
+
+                if (bNotSomeNotNumbers && (_Input_Index == 1 || _Input_Index == 3))
                 {
-                    World.iWorldGenerations = TryParse_Out;
+                    int.TryParse(textBox.Text, out TryParse_Out);
+                    if (_Input_Index == 1)
+                    {
+                        World.iWorldGenerations = TryParse_Out;
+                        Number_Generations_Used.Content = TryParse_Out;
+                        MessageOutput = "";
+                        Input_Checked = true;
+                    }
+                    else
+                    {
+                       MessageOutput = TryParse_Out > 100 ? "Rate input greater than 100, set at 100" : "";
+                       TryParse_Out = TryParse_Out > 100 ? 100 : TryParse_Out;
+                       World.iBreedingChance = TryParse_Out;
+                       Input_Checked = true;
+                    }
+                
+                    arboAlgorithmParams_OK[0] = true;
+                
+                }
+
+                else if ((IsDecimal_2digits || bNotSomeNotNumbers || IsDecimal_0digits) && _Input_Index == 2)
+                {
                     MessageOutput = "";
+                    decimal.TryParse(textBox.Text, out TryParse_Out_d);
+                    MessageOutput = TryParse_Out_d > 100 ? "Rate input greater than 100, set at 100" : "";
+                    TryParse_Out_d = TryParse_Out_d > 100 ? 100 : TryParse_Out_d;
+                    World.dMutationChance = (double)TryParse_Out_d;
+                    arboAlgorithmParams_OK[0] = true;
+                    Input_Checked = true;
                 }
                 else
                 {
-                   MessageOutput = TryParse_Out > 100 ? "Rate input greater than 100, set at 100" : "";
-                   TryParse_Out = TryParse_Out > 100 ? 100 : TryParse_Out;
-                   World.iBreedingChance = TryParse_Out;
+                    arboAlgorithmParams_OK[0] = false;
+                    text = text.Remove(text.Length - 1);
+                    Number_Generations_Used.Content = "Error";
+                    Input_Checked = false;
+                    textBox.Text = text;
                 }
-                
-                arboAlgorithmParams_OK[0] = true;
-                
-            }
-
-            else if (IsDecimal_2digits && _Input_Index == 2)
-            {
-                MessageOutput = "";
-                decimal.TryParse(textBox.Text, out TryParse_Out_d);
-                MessageOutput = TryParse_Out_d > 100 ? "Rate input greater than 100, set at 100" : "";
-                TryParse_Out_d = TryParse_Out_d > 100 ? 100 : TryParse_Out_d;
-                World.dMutationChance = (double)TryParse_Out_d;
-                arboAlgorithmParams_OK[0] = true; 
             }
             else
             {
-                arboAlgorithmParams_OK[0] = false;
+                Input_Checked = true;
+                Number_Generations_Used.Content = "Error";
             }
-           
-            Results_Windows.Text = MessageOutput;
+
+            Results_Windows.Text = MessageOutput;         
         }
 
         private bool Check_Input_Parameters(bool[] input_table, int parameters_used)
