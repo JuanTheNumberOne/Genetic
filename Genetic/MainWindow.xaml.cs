@@ -160,7 +160,7 @@ namespace Genetic
             if (Controllers_In_Network_List.SelectedItems.Count == 1)
             {
                 _SelectedController = (Controller_Properties)Controllers_In_Network_List.SelectedItems[0];
-                Results_Windows.Text = _Scanner.Network_View_DoubleClick(_SelectedController.ControllerInfo);
+                Results_Windows.Text = _Scanner.Network_Connect_To_Cotroller(_SelectedController.ControllerInfo);
             }
 
         }

@@ -1,20 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Windows.Controls;
 
 //ABB domain
-using ABB.Robotics;
 using ABB.Robotics.Controllers;
 using ABB.Robotics.Controllers.Discovery;
 using ABB.Robotics.Controllers.RapidDomain;
 
-//USER domain
+//IO Read Write domain
 using ABB_RW;
 
 //ControllerInfo domain
@@ -30,9 +22,6 @@ namespace Network_Scanner_Domain
         public ABB.Robotics.Controllers.RapidDomain.Task[] tasks { get; set; }
         public NetworkWatcher networkwatcher { get; set; }
         public UserAuthorizationSystem uas { get; set; }
-        public Num rapid_num { get; set; }
-        public RapidData rd { get; set; }
-
 
         public Network_Scanner()
         {
@@ -134,8 +123,8 @@ namespace Network_Scanner_Domain
 
         }
 
-        //Method toconnect to the controller
-        public string Network_View_DoubleClick(Object ControllerInfo)
+        //Method to connect to the controller
+        public string Network_Connect_To_Cotroller(Object ControllerInfo)
         {
             string _infomessage = "";
 
