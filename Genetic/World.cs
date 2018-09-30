@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
 using System.Security.Cryptography;
 
 namespace Genetic
 {
-    static class World
+    class World
     {
         //List containing the population
         public static List<Individual> Population { get; set;}
@@ -365,6 +362,26 @@ namespace Genetic
                 //repeat breeding proccess until the new generation is born
 
             } while (_NewGeneration.Count < PopulationSize);
+
+            return _NewGeneration;
+        }
+
+        public static List<Individual> BreedNextGeneration_Tournament()
+        {
+            List<Individual> _OldGeneration = Population;
+            List<Individual> _NewGeneration = new List<Individual>();
+            List<Individual> _BreedingRoom = new List<Individual>();
+            Individual _Breeded = new Individual();
+
+            return _NewGeneration;
+        }
+
+        public static List<Individual> BreedNextGeneration_T_R()
+        {
+            List<Individual> _OldGeneration = Population;
+            List<Individual> _NewGeneration = new List<Individual>();
+            List<Individual> _BreedingRoom = new List<Individual>();
+            Individual _Breeded = new Individual();
 
             return _NewGeneration;
         }
