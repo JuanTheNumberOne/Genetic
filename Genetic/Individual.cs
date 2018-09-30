@@ -109,7 +109,7 @@ namespace Genetic
             }    
         }
 
-        private Individual WriteDNA_ToParameters(int[] DNA_Sample)
+        public Individual WriteDNA_ToParameters(int[] DNA_Sample)
         {
             Individual _Individual = new Individual();
 
@@ -133,10 +133,27 @@ namespace Genetic
             }
             _Individual.DNA = DNA_Sample;
 
-            //For the tests the completion time will be a product of an abstract equation
-            _Individual.dTime = (_Individual.iSpeed / 10 + _Individual.iZone / 2 + _Individual.iAcceleration * 2 + _Individual.iAcceleration_Ramp * (3 / 2)) / 2; //MAXIMUM IS 725
-
             return _Individual;
+
+        }
+
+        public int[] Write_DNA_String_To_DNA_Array(string DNA_Sample)
+        {
+            int[] _DNA_Array = new int[5];
+            int _temp = 0;
+            string[] _DNA_String_Array = new string[5];
+            string _DNA_Sample = DNA_Sample;
+            char[] charSeparators = new char[] { ',' };
+
+            _DNA_String_Array = _DNA_Sample.Split(charSeparators);
+
+            for (int i = 0; i < 4; i++)
+            {
+                int.TryParse(_DNA_String_Array[0],out _temp);
+                _DNA_Array[i] = _temp;
+            }
+
+            return _DNA_Array;
 
         }
 
