@@ -43,6 +43,10 @@ namespace Genetic
         //Scribe to record and read the evolution history. He is the sole and unique witness of this universe.
         private Evolution_History_Scribe Royal_Scribe;
 
+        //List of worlds in the unvierse
+        private List<World> _Worlds = new List<World>();
+        private Universe NewUniverse;
+
         //Byre that indicates if the input parameters are right. // 0 Wrong parameter ; 1 right parameter
         private bool[] arboAlgorithmParams_OK = new bool[8];
         //--// BIT VALUES //--//
@@ -119,6 +123,7 @@ namespace Genetic
 
         public MainWindow()
         {
+            NewUniverse = new Universe(1, _Worlds); //Create a new unvierse
             InitializeComponent();
             World.PopulationSize = 15;
             World.dCompletionTime = (decimal)0.10; // Distance d= 924 mm, velocity v= 9000 mm/s , ignoring acceleration and deceleration, massless point (no energy loss)
@@ -128,7 +133,7 @@ namespace Genetic
             World.bAllowInnBreeding = false;
             World.iWolrdIndex = 1;
             World.iWorldGenerations = 5;
-            World.iNumberOfParameters = 4;
+            World.iNumberOfParameters = 5;
             RefreshNeeded = false;
             Input_Checked = true;
 
@@ -349,7 +354,7 @@ namespace Genetic
 
             //Check if a controller is selected for the algorithm
             
-            if (_Scanner.controller !=null && Check_Input_Parameters(arboAlgorithmParams_OK,4))
+            if (_Scanner.controller !=null && Check_Input_Parameters(arboAlgorithmParams_OK,World.iNumberOfParameters))
             {
                 //And there was light
                 Results_Windows.Text = "AND THERE WAS LIGHT... ";
@@ -438,9 +443,17 @@ namespace Genetic
                 //Display the winner 
                 Results_Windows.Text = "And on the seventh day God had finished his work of creation, so he rested from all " + "The winner is: " + World.Population[0].DNA_Code;
             }
+            else if (_Scanner.controller == null && Check_Input_Parameters(arboAlgorithmParams_OK, World.iNumberOfParameters))
+            {
+                Results_Windows.Text = "No controller selected, parameters in order";
+            }
+            else if (_Scanner.controller != null && !Check_Input_Parameters(arboAlgorithmParams_OK, World.iNumberOfParameters))
+            {
+                Results_Windows.Text = "Controller selected, parameters not in order";
+            }
             else
             {
-                Results_Windows.Text = "No controller selected or parameters not in order";
+                Results_Windows.Text = "No controller selected and parameters not in order";
             }
  
         }
@@ -477,6 +490,12 @@ namespace Genetic
             Check_Numeric_Input(sender, e, 3, MessageOutput);
         }
 
+        private void Population_Size_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string MessageOutput = "Wrong population size. Must be a natural number";
+            Check_Numeric_Input(sender, e, 4, MessageOutput);
+        }
+
         private void Check_Numeric_Input(object sender, TextChangedEventArgs e, int Input_Index, string MessageOutput)
         {
             //Get the object
@@ -497,7 +516,7 @@ namespace Genetic
             if (Input_Checked == true && text.Length >= 1)
             {
 
-                if (bNotSomeNotNumbers && (_Input_Index == 1 || _Input_Index == 3))
+                if (bNotSomeNotNumbers && (_Input_Index == 1 || _Input_Index == 3 || _Input_Index == 4))
                 {
                     int.TryParse(textBox.Text, out TryParse_Out);
                     if (_Input_Index == 1)
@@ -508,7 +527,7 @@ namespace Genetic
                         arboAlgorithmParams_OK[0] = true;
                         Input_Checked = true;
                     }
-                    else
+                    else if (_Input_Index == 3)
                     {
                        MessageOutput = TryParse_Out > 100 ? "Rate input greater than 100, set at 100" : "";
                        TryParse_Out = TryParse_Out > 100 ? 100 : TryParse_Out;
@@ -516,6 +535,16 @@ namespace Genetic
                        World.iBreedingChance = TryParse_Out;
                        arboAlgorithmParams_OK[3] = true;
                        Input_Checked = true;
+                    }
+                    else
+                    {
+                        MessageOutput = TryParse_Out == 0 ? "Population size cannot be 0, set at 1" : "";
+                        TryParse_Out = TryParse_Out == 0 ? 1 : TryParse_Out;
+                        World.PopulationSize = TryParse_Out;
+                        Population_Size_Used.Content = TryParse_Out;
+                        MessageOutput = "";
+                        arboAlgorithmParams_OK[4] = true;
+                        Input_Checked = true;
                     }
 
                 }
@@ -548,6 +577,10 @@ namespace Genetic
                         case 3:
                             Breeding_Rate_Used.Content = "Error";
                             arboAlgorithmParams_OK[3] = false;
+                            break;
+                        case 4:
+                            Population_Size_Used.Content = "Error";
+                            arboAlgorithmParams_OK[4] = false;
                             break;
                         default:
                             break;
@@ -613,6 +646,7 @@ namespace Genetic
                 NotInOrder = arboAlgorithmParams_OK[1] == false ? NotInOrder + "No method chosen; "       : NotInOrder;
                 NotInOrder = arboAlgorithmParams_OK[2] == false ? NotInOrder + "Wrong mutation rate; "    : NotInOrder;
                 NotInOrder = arboAlgorithmParams_OK[3] == false ? NotInOrder + "Wrong breeding rate; "    : NotInOrder;
+                NotInOrder = arboAlgorithmParams_OK[4] == false ? NotInOrder + "Wrong population size; "  : NotInOrder;
                 Results_Windows.Text = NotInOrder;
             }
 
@@ -633,7 +667,9 @@ namespace Genetic
         {
             Royal_Scribe = new Evolution_History_Scribe();
             Individual _Idividual_Recorded = Idividual_Recorded;
-            Royal_Scribe.Add_Individual_Record(_Idividual_Recorded, Generation_Number, World_Numer);
+            Royal_Scribe.Add_Individual_Record(_Idividual_Recorded, Generation_Number, World_Numer, NewUniverse.Session_Number);
         }
+
+        
     }
 }

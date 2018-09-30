@@ -13,15 +13,18 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
-            <ColumnDefinition Width="225*"/>
-            <ColumnDefinition Width="143*"/>
+            <ColumnDefinition Width="785*"/>
+            <ColumnDefinition Width="279*"/>
+            <ColumnDefinition Width="677*"/>
         </Grid.ColumnDefinitions>
 
-        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="377" Margin="906,37,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="825">
-            <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="104" Margin="383,227,0,0" VerticalAlignment="Top" Width="81"/>
+        <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Height="114" Margin="24,165,0,0" VerticalAlignment="Top" Width="285" Grid.Column="3" Grid.Row="1"/>
+
+        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="406" Margin="121,23,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="825" Grid.Column="2">
+            <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="28" Margin="182,371,0,0" VerticalAlignment="Top" Width="283"/>
         </Border>
 
-        <ComboBox x:Name="Selection_Method" HorizontalAlignment="Left" Height="27" Margin="161,252,0,0" VerticalAlignment="Top" Width="146" Grid.Column="2" Grid.Row="1" SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding Combobox_SelectionMethods}">
+        <ComboBox x:Name="Selection_Method" HorizontalAlignment="Left" Height="27" Margin="161,252,0,0" VerticalAlignment="Top" Width="146" Grid.Column="3" Grid.Row="1" SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding Combobox_SelectionMethods}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -31,28 +34,24 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
 
-        <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Height="114" Margin="24,165,0,0" VerticalAlignment="Top" Width="285" Grid.Column="2" Grid.Row="1"/>
-
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="29" Margin="24,194,0,0" VerticalAlignment="Top" Width="285" Grid.Column="2" Grid.Row="1">
-            <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="29" Margin="-1,28,-1,-30" VerticalAlignment="Top" Width="314">
-                <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="29" Margin="-1,28,-1,-30" VerticalAlignment="Top" Width="314"/>
-            </Border>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="29" Margin="24,194,0,0" VerticalAlignment="Top" Width="285" Grid.Column="3" Grid.Row="1">
+            <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="29" Margin="-1,28,-1,-30" VerticalAlignment="Top" Width="314"/>
         </Border>
 
-        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="497" Margin="10,37,0,0" VerticalAlignment="Top" Width="896" Grid.RowSpan="2"/>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="29" Margin="24,165,0,0" VerticalAlignment="Top" Width="285" Grid.Column="2" Grid.Row="1"/>
-        <TextBox x:Name="Generation_Number" HorizontalAlignment="Left" Height="23" Margin="161,168,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.389,0.522" TextChanged="Generation_Number_TextChanged" Grid.Row="1" Grid.Column="2"/>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="511" Margin="10,23,0,0" VerticalAlignment="Top" Width="896" Grid.RowSpan="2"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="29" Margin="24,165,0,0" VerticalAlignment="Top" Width="285" Grid.Column="3" Grid.Row="1"/>
+        <TextBox x:Name="Generation_Number" HorizontalAlignment="Left" Height="23" Margin="161,168,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.389,0.522" TextChanged="Generation_Number_TextChanged" Grid.Row="1" Grid.Column="3"/>
 
 
-        <Label Content="Number of generations" HorizontalAlignment="Left" Height="28" Margin="24,168,0,0" VerticalAlignment="Top" Width="139" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="2" Grid.Row="1"/>
+        <Label Content="Number of generations" HorizontalAlignment="Left" Height="28" Margin="24,168,0,0" VerticalAlignment="Top" Width="139" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="3" Grid.Row="1"/>
 
-        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="120" Margin="906,297,0,0" Grid.Row="1" VerticalAlignment="Top" Width="825"/>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="105" Margin="121,312,0,0" Grid.Row="1" VerticalAlignment="Top" Width="825" Grid.Column="2"/>
         <Label Content="Display 1 (Default: First Generation)" HorizontalAlignment="Left" Height="28" Margin="351,36,0,0" VerticalAlignment="Top" Width="199" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="1"/>
-        <Label Content="Display 2 (Default: Last Generation)" HorizontalAlignment="Left" Height="28" Margin="351,167.5,0,0" VerticalAlignment="Top" Width="199" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="1" Grid.Row="1"/>
-        <TextBox x:Name="Results_Windows" HorizontalAlignment="Left" Height="66" Margin="949,330,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="724" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"/>
-        <Button x:Name="Let_There_Be_Light" Content="Let There be light" HorizontalAlignment="Left" Height="40" Margin="458,239,0,0" VerticalAlignment="Top" Width="151" Click="Let_There_Be_Light_Click" FontSize="16" FontWeight="Bold" Grid.Column="2" Grid.Row="1"/>
-        <Button x:Name="Scanner" Content="Scan for controllers" HorizontalAlignment="Left" Height="40" Margin="949,161,0,0" VerticalAlignment="Top" Width="108" Click="Scanner_Click" Grid.Column="1" Grid.Row="1" RenderTransformOrigin="-0.307,0.397"/>
-        <ListView x:Name="Parameters_View_Old" HorizontalAlignment="Center" Height="200" VerticalAlignment="Top" Width="860" Grid.Column="1" Margin="29,200.5,175,0" Grid.Row="1">
+        <Label Content="Display 2 (Default: Last Generation)" HorizontalAlignment="Left" Height="28" Margin="351,167,0,0" VerticalAlignment="Top" Width="199" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="1" Grid.Row="1"/>
+        <TextBox x:Name="Results_Windows" HorizontalAlignment="Left" Height="66" Margin="164,346,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="724" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1"/>
+        <Button x:Name="Let_There_Be_Light" Content="Let There be light" HorizontalAlignment="Left" Height="40" Margin="458,239,0,0" VerticalAlignment="Top" Width="151" Click="Let_There_Be_Light_Click" FontSize="16" FontWeight="Bold" Grid.Column="3" Grid.Row="1"/>
+        <Button x:Name="Scanner" Content="Scan for controllers" HorizontalAlignment="Left" Height="40" Margin="164,161,0,0" VerticalAlignment="Top" Width="108" Click="Scanner_Click" Grid.Column="2" Grid.Row="1" RenderTransformOrigin="-0.307,0.397"/>
+        <ListView x:Name="Parameters_View_Old" HorizontalAlignment="Center" Height="200" VerticalAlignment="Top" Width="860" Grid.Column="1" Margin="29,215,175,0" Grid.Row="1" Grid.ColumnSpan="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Movement Type" Width="100" DisplayMemberBinding="{Binding iMovementType}"/>
@@ -68,12 +67,12 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="Start" Content="Start Rapid" HorizontalAlignment="Left" Height="39" Margin="950,206,0,0" VerticalAlignment="Top" Width="107" Click="Start_Click" Grid.Column="1" Grid.Row="1"/>
-        <Button x:Name="Stop" Content="Stop Rapid" HorizontalAlignment="Left" Height="39" Margin="950,250,0,0" VerticalAlignment="Top" Width="108" Click="Stop_Click" Grid.Column="1" Grid.Row="1"/>
-        <Label Grid.ColumnSpan="2" Content="GENERATION DISPLAY" HorizontalAlignment="Left" Height="39" Margin="10,4,0,0" VerticalAlignment="Top" Width="206" FontSize="18" FontWeight="Bold"/>
-        <Label Content="Message Output" HorizontalAlignment="Left" Height="28" Margin="957,302,0,0" VerticalAlignment="Top" Width="199" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"/>
-        <Label Content="Controllers in network display" HorizontalAlignment="Left" Height="28" Margin="956,37,0,0" VerticalAlignment="Top" Width="200" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="1" Grid.ColumnSpan="2"/>
-        <ListView x:Name="Controllers_In_Network_List" Height="204" Margin="949,60,68,0" Width="724" MouseDoubleClick="Controllers_In_Network_List_MouseDoubleClick" Tag="{Binding ControllerInfo}" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.RowSpan="2">
+        <Button x:Name="Start" Content="Start Rapid" HorizontalAlignment="Left" Height="39" Margin="165,206,0,0" VerticalAlignment="Top" Width="107" Click="Start_Click" Grid.Column="2" Grid.Row="1"/>
+        <Button x:Name="Stop" Content="Stop Rapid" HorizontalAlignment="Left" Height="39" Margin="165,250,0,0" VerticalAlignment="Top" Width="108" Click="Stop_Click" Grid.Column="2" Grid.Row="1"/>
+        <Label Grid.ColumnSpan="2" Content="GENERATION DISPLAY" HorizontalAlignment="Left" Height="39" Margin="10,-5,0,0" VerticalAlignment="Top" Width="206" FontSize="18" FontWeight="Bold"/>
+        <Label Content="Message Output" HorizontalAlignment="Left" Height="28" Margin="172,312,0,0" VerticalAlignment="Top" Width="199" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1"/>
+        <Label Content="Controllers in network display" HorizontalAlignment="Left" Height="28" Margin="171,37,0,0" VerticalAlignment="Top" Width="200" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="2" Grid.ColumnSpan="2"/>
+        <ListView x:Name="Controllers_In_Network_List" Height="204" Margin="164,60,68,0" Width="724" MouseDoubleClick="Controllers_In_Network_List_MouseDoubleClick" Tag="{Binding ControllerInfo}" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" Width="30 " DisplayMemberBinding="{Binding Id}"/>
@@ -86,7 +85,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListView x:Name="Parameters_View" HorizontalAlignment="Center" Height="204" Margin="29,60,175,0" VerticalAlignment="Top" Width="860" Grid.Column="1" Grid.RowSpan="2">
+        <ListView x:Name="Parameters_View" HorizontalAlignment="Center" Height="204" Margin="29,74,175,0" VerticalAlignment="Top" Width="860" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Movement Type" Width="100" DisplayMemberBinding="{Binding iMovementType}"/>
@@ -102,15 +101,75 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="Check_Inputs" Content="Check input parameters" HorizontalAlignment="Left" Height="40" Margin="314,239,0,0" VerticalAlignment="Top" Width="137" Click="Check_Inputs_Click" Grid.Column="2" Grid.Row="1"/>
-        <Label Content="Selection method" HorizontalAlignment="Left" Height="28" Margin="24,251,0,0" VerticalAlignment="Top" Width="106" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="2" Grid.Row="1"/>
-        <Label Content="Mutation rate" HorizontalAlignment="Left" Height="28" Margin="24,193,0,0" VerticalAlignment="Top" Width="106" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="2" Grid.Row="1"/>
-        <Label Content="Breeding rate" HorizontalAlignment="Left" Height="28" Margin="24,221,0,0" VerticalAlignment="Top" Width="106" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="2" Grid.Row="1"/>
-        <TextBox x:Name="Mutation_Rate" HorizontalAlignment="Left" Height="22" Margin="161,198,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.389,0.522" TextChanged="Mutation_Rate_TextChanged" Grid.Row="1" Grid.Column="2"/>
-        <TextBox x:Name="Breeding_Rate" HorizontalAlignment="Left" Height="23" Margin="161,226,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.389,0.522" TextChanged="Breeding_Rate_TextChanged" Grid.Row="1" Grid.Column="2"/>
-        <Label Content="Current value" HorizontalAlignment="Left" Height="27" Margin="224,143,0,0" VerticalAlignment="Top" Width="83" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="2" Grid.Row="1"/>
-        <Label x:Name="Breeding_Rate_Used" Content="" HorizontalAlignment="Left" Height="24" Margin="258,223,0,0" VerticalAlignment="Top" Width="51" Grid.Column="2" Grid.Row="1"/>
-        <Label x:Name="Mutation_Rate_Used" Content="" HorizontalAlignment="Left" Height="24" Margin="258,195,0,0" VerticalAlignment="Top" Width="51" Grid.Column="2" Grid.Row="1"/>
-        <Label x:Name="Number_Generations_Used" Content="" HorizontalAlignment="Left" Height="24" Margin="258,166,0,0" VerticalAlignment="Top" Width="51" Grid.Column="2" Grid.Row="1"/>
+        <Button x:Name="Check_Inputs" Content="Check input parameters" HorizontalAlignment="Left" Height="40" Margin="314,239,0,0" VerticalAlignment="Top" Width="137" Click="Check_Inputs_Click" Grid.Column="3" Grid.Row="1"/>
+        <Label Content="Selection method" HorizontalAlignment="Left" Height="28" Margin="24,251,0,0" VerticalAlignment="Top" Width="106" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="3" Grid.Row="1"/>
+        <Label Content="Mutation rate" HorizontalAlignment="Left" Height="28" Margin="24,193,0,0" VerticalAlignment="Top" Width="106" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="3" Grid.Row="1"/>
+        <Label Content="Breeding rate" HorizontalAlignment="Left" Height="28" Margin="24,221,0,0" VerticalAlignment="Top" Width="106" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="3" Grid.Row="1"/>
+        <TextBox x:Name="Mutation_Rate" HorizontalAlignment="Left" Height="22" Margin="161,198,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.389,0.522" TextChanged="Mutation_Rate_TextChanged" Grid.Row="1" Grid.Column="3"/>
+        <TextBox x:Name="Breeding_Rate" HorizontalAlignment="Left" Height="23" Margin="161,226,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.389,0.522" TextChanged="Breeding_Rate_TextChanged" Grid.Row="1" Grid.Column="3"/>
+        <Label Content="Current value" HorizontalAlignment="Left" Height="27" Margin="224,143,0,0" VerticalAlignment="Top" Width="83" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="3" Grid.Row="1"/>
+        <Label x:Name="Breeding_Rate_Used" Content="" HorizontalAlignment="Left" Height="24" Margin="258,223,0,0" VerticalAlignment="Top" Width="51" Grid.Column="3" Grid.Row="1"/>
+        <Label x:Name="Mutation_Rate_Used" Content="" HorizontalAlignment="Left" Height="24" Margin="258,195,0,0" VerticalAlignment="Top" Width="51" Grid.Column="3" Grid.Row="1"/>
+        <Label x:Name="Number_Generations_Used" Content="" HorizontalAlignment="Left" Height="24" Margin="258,166,0,0" VerticalAlignment="Top" Width="51" Grid.Column="3" Grid.Row="1"/>
+        <Label Content="Population size" HorizontalAlignment="Left" Height="28" Margin="24,279,0,0" VerticalAlignment="Top" Width="106" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="3" Grid.Row="1"/>
+        <TextBox x:Name="Population_Size" HorizontalAlignment="Left" Height="23" Margin="161,281,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.389,0.522" TextChanged="Population_Size_TextChanged" Grid.Row="1" Grid.Column="3"/>
+        <Label x:Name="Population_Size_Used" Content="" HorizontalAlignment="Left" Height="24" Margin="256,280,0,0" VerticalAlignment="Top" Width="51" Grid.Column="3" Grid.Row="1"/>
+        <ComboBox x:Name="Generation_Selected_disp_1" HorizontalAlignment="Left" Height="28" Margin="701,46,0,0" VerticalAlignment="Top" Width="51" Grid.Column="1" SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding Combobox_SelectionMethods}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding MethodName}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <ComboBox x:Name="Wolrd_Selected_disp_1" HorizontalAlignment="Left" Height="28" Margin="767,46,0,0" VerticalAlignment="Top" Width="51" Grid.Column="1" SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding Combobox_SelectionMethods}" Grid.ColumnSpan="2">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding MethodName}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <ComboBox x:Name="Session_Selected_disp_1" HorizontalAlignment="Left" Height="28" Margin="53,46,0,0" VerticalAlignment="Top" Width="51" Grid.Column="2" SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding Combobox_SelectionMethods}" RenderTransformOrigin="0.461,1.357">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding MethodName}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <ComboBox x:Name="Generation_Selected_disp_2" HorizontalAlignment="Left" Height="27" Margin="701,188,0,0" VerticalAlignment="Top" Width="51" Grid.Column="1" SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding Combobox_SelectionMethods}" Grid.Row="1">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding MethodName}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <ComboBox x:Name="Wolrd_Selected_disp_2" HorizontalAlignment="Left" Height="27" Margin="767,188,0,0" VerticalAlignment="Top" Width="51" Grid.Column="1" SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding Combobox_SelectionMethods}" Grid.Row="1" Grid.ColumnSpan="2">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding MethodName}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <ComboBox x:Name="Session_Selected_disp_2" HorizontalAlignment="Left" Height="27" Margin="53,188,0,0" VerticalAlignment="Top" Width="51" Grid.Column="2" SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding Combobox_SelectionMethods}" Grid.Row="1">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding MethodName}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <Label Content="Generation      World            Session" HorizontalAlignment="Left" Height="28" Margin="689,23,0,0" VerticalAlignment="Top" Width="200" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <Label Content="Generation      World            Session" HorizontalAlignment="Left" Height="28" Margin="689,166,0,0" VerticalAlignment="Top" Width="200" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"/>
+        <Label Grid.ColumnSpan="2" Content="NETWORK VIEW AND CONTROL" HorizontalAlignment="Left" Height="39" Margin="121,-5,0,0" VerticalAlignment="Top" Width="288" FontSize="18" FontWeight="Bold" Grid.Column="2"/>
     </Grid>
 </Window>

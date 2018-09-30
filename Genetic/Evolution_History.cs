@@ -21,5 +21,6 @@ namespace Genetic
         public Nullable<decimal> Elapsed_Time { get; set; }
         public Nullable<decimal> Fitness { get; set; }
         public Nullable<decimal> Weighted_Fitness { get; set; }
+        public Nullable<int> Session_Number { get; set; }
     }
 }
