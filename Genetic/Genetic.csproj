@@ -97,7 +97,7 @@
       <DependentUpon>ML_Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Network_Scanner.cs" />
-    <Compile Include="SubWorld.cs" />
+    <Compile Include="Universe.cs" />
     <Compile Include="World.cs" />
     <Compile Include="Individual.cs" />
     <Compile Include="MainWindow.xaml.cs">
