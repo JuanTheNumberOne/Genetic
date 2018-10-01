@@ -25,9 +25,7 @@
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="25" Margin="24,224,0,0" VerticalAlignment="Top" Width="285" Grid.Column="3" Grid.Row="1"/>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="25" Margin="24,199,0,0" VerticalAlignment="Top" Width="285" Grid.Column="3" Grid.Row="1"/>
 
-        <Border  BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="406" Margin="121,42,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="825" Grid.Column="2">
-            <Rectangle x:Name="Conn_Status" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="28" Margin="479,230,0,0" Stroke="Black" VerticalAlignment="Top" Width="126"/>
-        </Border>
+        <Border  BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="406" Margin="121,42,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="825" Grid.Column="2"/>
 
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="25" Margin="24,297,0,0" VerticalAlignment="Top" Width="285" Grid.Column="3" Grid.Row="1"/>
 
@@ -56,22 +54,6 @@
         <TextBox x:Name="Results_Windows" HorizontalAlignment="Left" Height="66" Margin="164,364,0,-3" TextWrapping="Wrap" VerticalAlignment="Top" Width="724" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1"/>
         <Button x:Name="Let_There_Be_Light" Content="Let There be light" HorizontalAlignment="Left" Height="40" Margin="320,216,0,0" VerticalAlignment="Top" Width="152" Click="Let_There_Be_Light_Click" FontSize="16" FontWeight="Bold" Grid.Column="3" Grid.Row="1"/>
         <Button x:Name="Scanner" Content="Scan for controllers" HorizontalAlignment="Left" Height="40" Margin="164,179,0,0" VerticalAlignment="Top" Width="108" Click="Scanner_Click" Grid.Column="2" Grid.Row="1" RenderTransformOrigin="-0.307,0.397"/>
-        <ListView x:Name="Parameters_View_Old" HorizontalAlignment="Center" Height="200" VerticalAlignment="Top" Width="860" Grid.Column="1" Margin="27,92,177,0" Grid.ColumnSpan="2" Grid.RowSpan="2">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Movement Type" Width="100" DisplayMemberBinding="{Binding iMovementType}"/>
-                    <GridViewColumn Header="Speed" Width="110" DisplayMemberBinding="{Binding iSpeed}"/>
-                    <GridViewColumn Header="Zone" Width="85" DisplayMemberBinding="{Binding iZone}"/>
-                    <GridViewColumn Header="Acc" Width="70" DisplayMemberBinding="{Binding iAcceleration}"/>
-                    <GridViewColumn Header="Acc_Ramp" Width="70" DisplayMemberBinding="{Binding iAcceleration_Ramp}"/>
-                    <GridViewColumn Header="Fitness Score" Width="90" DisplayMemberBinding="{Binding dFitnessScore}"/>
-                    <GridViewColumn Header="Weighted Fitness Score" Width="90" DisplayMemberBinding="{Binding dWeightedFitnessValue}"/>
-                    <GridViewColumn Header="Time Elapsed" Width="90" DisplayMemberBinding="{Binding dTime}"/>
-                    <GridViewColumn Header="DNA" Width="150" DisplayMemberBinding="{Binding DNA_Code}"/>
-
-                </GridView>
-            </ListView.View>
-        </ListView>
         <Button x:Name="Start" Content="Start Rapid" HorizontalAlignment="Left" Height="39" Margin="165,224,0,0" VerticalAlignment="Top" Width="107" Click="Start_Click" Grid.Column="2" Grid.Row="1"/>
         <Button x:Name="Stop" Content="Stop Rapid" HorizontalAlignment="Left" Height="39" Margin="165,268,0,0" VerticalAlignment="Top" Width="108" Click="Stop_Click" Grid.Column="2" Grid.Row="1"/>
         <Label Grid.ColumnSpan="2" Content="GENERATION DISPLAY" HorizontalAlignment="Left" Height="39" Margin="10,13,0,0" VerticalAlignment="Top" Width="206" FontSize="18" FontWeight="Bold"/>
@@ -90,29 +72,12 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListView x:Name="Parameters_View" HorizontalAlignment="Center" Height="204" Margin="27,222,177,0" VerticalAlignment="Top" Width="860" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Movement Type" Width="100" DisplayMemberBinding="{Binding iMovementType}"/>
-                    <GridViewColumn Header="Speed" Width="110" DisplayMemberBinding="{Binding iSpeed}"/>
-                    <GridViewColumn Header="Zone" Width="85" DisplayMemberBinding="{Binding iZone}"/>
-                    <GridViewColumn Header="Acc" Width="70" DisplayMemberBinding="{Binding iAcceleration}"/>
-                    <GridViewColumn Header="Acc_Ramp" Width="70" DisplayMemberBinding="{Binding iAcceleration_Ramp}"/>
-                    <GridViewColumn Header="Fitness Score" Width="90" DisplayMemberBinding="{Binding dFitnessScore}"/>
-                    <GridViewColumn Header="Weighted Fitness Score" Width="90" DisplayMemberBinding="{Binding dWeightedFitnessValue}"/>
-                    <GridViewColumn Header="Time Elapsed" Width="90" DisplayMemberBinding="{Binding dTime}"/>
-                    <GridViewColumn Header="DNA" Width="150" DisplayMemberBinding="{Binding DNA_Code}"/>
-
-                </GridView>
-            </ListView.View>
-        </ListView>
         <Button x:Name="Check_Inputs" Content="Check input parameters" HorizontalAlignment="Left" Height="40" Margin="497,218,0,0" VerticalAlignment="Top" Width="152" Click="Check_Inputs_Click" Grid.Column="3" Grid.Row="1"/>
         <Label Content="Selection method" HorizontalAlignment="Left" Height="28" Margin="24,243,0,0" VerticalAlignment="Top" Width="106" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="3" Grid.Row="1"/>
         <Label Content="Mutation rate" HorizontalAlignment="Left" Height="28" Margin="24,198,0,0" VerticalAlignment="Top" Width="106" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="3" Grid.Row="1"/>
         <Label Content="Breeding rate" HorizontalAlignment="Left" Height="28" Margin="24,221,0,0" VerticalAlignment="Top" Width="106" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="3" Grid.Row="1"/>
         <TextBox x:Name="Mutation_Rate" HorizontalAlignment="Left" Height="22" Margin="161,200,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.389,0.522" TextChanged="Mutation_Rate_TextChanged" Grid.Row="1" Grid.Column="3"/>
         <TextBox x:Name="Breeding_Rate" HorizontalAlignment="Left" Height="23" Margin="161,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.389,0.522" TextChanged="Breeding_Rate_TextChanged" Grid.Row="1" Grid.Column="3"/>
-        <Label Content="Current value" HorizontalAlignment="Left" Height="27" Margin="226,95,0,0" VerticalAlignment="Top" Width="83" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="3" Grid.Row="1"/>
         <Label x:Name="Breeding_Rate_Used" Content="" HorizontalAlignment="Left" Height="24" Margin="257,224,0,0" VerticalAlignment="Top" Width="51" Grid.Column="3" Grid.Row="1"/>
         <Label x:Name="Mutation_Rate_Used" Content="" HorizontalAlignment="Left" Height="24" Margin="258,198,0,0" VerticalAlignment="Top" Width="51" Grid.Column="3" Grid.Row="1"/>
         <Label x:Name="Number_Generations_Used" Content="" HorizontalAlignment="Left" Height="24" Margin="258,175,0,0" VerticalAlignment="Top" Width="51" Grid.Column="3" Grid.Row="1"/>
@@ -162,9 +127,43 @@
         <Label Content="Primuses number" HorizontalAlignment="Left" Height="28" Margin="24,297,0,0" VerticalAlignment="Top" Width="106" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="3" Grid.Row="1"/>
         <TextBox x:Name="Primuses_Number" HorizontalAlignment="Left" Height="23" Margin="161,298,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.389,0.522" TextChanged="Primuses_Number_TextChanged" Grid.Row="1" Grid.Column="3"/>
         <Label x:Name="Primuses_Number_Used" Content="" HorizontalAlignment="Left" Height="24" Margin="256,298,0,0" VerticalAlignment="Top" Width="51" Grid.Column="3" Grid.Row="1"/>
+        <Rectangle x:Name="Conn_Status" Grid.Column="3" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="30" Margin="320,153,0,0" Grid.Row="1" Stroke="Black" VerticalAlignment="Top" Width="130"/>
         <Label x:Name="Conn_Text_Status" Content="Connectivity status:" HorizontalAlignment="Left" Height="30" Margin="320,153,0,0" VerticalAlignment="Top" Width="329" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="3" Grid.Row="1" FontSize="14"/>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="24" Margin="24,152,0,0" VerticalAlignment="Top" Width="285" Grid.Column="3" Grid.Row="1">
             <CheckBox x:Name="Elitism_used" Content="Elitism [10%]" HorizontalAlignment="Left" Height="23" Margin="5,4,0,-5" VerticalAlignment="Top" Width="103" Checked="Elitism_used_Checked"/>
         </Border>
+        <ListView x:Name="Parameters_View" HorizontalAlignment="Center" Height="200" Margin="27,222,177,0" VerticalAlignment="Top" Width="860" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1">
+            <ListView.View>
+                <GridView x:Name="New">
+                    <GridViewColumn Header="Movement Type" Width="100" DisplayMemberBinding="{Binding iMovementType}"/>
+                    <GridViewColumn Header="Speed" Width="110" DisplayMemberBinding="{Binding iSpeed}"/>
+                    <GridViewColumn Header="Zone" Width="85" DisplayMemberBinding="{Binding iZone}"/>
+                    <GridViewColumn Header="Acc" Width="70" DisplayMemberBinding="{Binding iAcceleration}"/>
+                    <GridViewColumn Header="Acc_Ramp" Width="70" DisplayMemberBinding="{Binding iAcceleration_Ramp}"/>
+                    <GridViewColumn Header="Fitness Score" Width="90" DisplayMemberBinding="{Binding dFitnessScore}"/>
+                    <GridViewColumn Header="Weighted Fitness Score" Width="90" DisplayMemberBinding="{Binding dWeightedFitnessValue}"/>
+                    <GridViewColumn Header="Time Elapsed" Width="90" DisplayMemberBinding="{Binding dTime}"/>
+                    <GridViewColumn Header="DNA" Width="150" DisplayMemberBinding="{Binding DNA_Code}"/>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <ListView x:Name="Parameters_View_Old" HorizontalAlignment="Center" Height="200" Margin="27,93,177,0" VerticalAlignment="Top" Width="860" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <ListView.View>
+                <GridView x:Name="New1">
+                    <GridViewColumn Header="Movement Type" Width="100" DisplayMemberBinding="{Binding iMovementType}"/>
+                    <GridViewColumn Header="Speed" Width="110" DisplayMemberBinding="{Binding iSpeed}"/>
+                    <GridViewColumn Header="Zone" Width="85" DisplayMemberBinding="{Binding iZone}"/>
+                    <GridViewColumn Header="Acc" Width="70" DisplayMemberBinding="{Binding iAcceleration}"/>
+                    <GridViewColumn Header="Acc_Ramp" Width="70" DisplayMemberBinding="{Binding iAcceleration_Ramp}"/>
+                    <GridViewColumn Header="Fitness Score" Width="90" DisplayMemberBinding="{Binding dFitnessScore}"/>
+                    <GridViewColumn Header="Weighted Fitness Score" Width="90" DisplayMemberBinding="{Binding dWeightedFitnessValue}"/>
+                    <GridViewColumn Header="Time Elapsed" Width="90" DisplayMemberBinding="{Binding dTime}"/>
+                    <GridViewColumn Header="DNA" Width="150" DisplayMemberBinding="{Binding DNA_Code}"/>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>
