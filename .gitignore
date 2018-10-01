@@ -18,5 +18,4 @@ packages/
 *.Context.cs
 *.Designer.cs
 *.Context.tt
-*zip
 packages.config
