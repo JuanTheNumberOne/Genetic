@@ -55,7 +55,7 @@ namespace Genetic
         //--// Bit 2: Mutation rate
         //--// Bit 3: Breeding rate
         //--// Bit 4: Poupulation number
-        //--// Bit 5: Reserve
+        //--// Bit 5: Primuses number
         //--// Bit 6: Reserve
         //--// Bit 7: Reserve
 
@@ -121,10 +121,16 @@ namespace Genetic
         }
         public Task ReadTimes;
 
+
+        // END OF GLOBAL VARIABLES DECLARATION----------------------------------------------------------------------------------------------------------------------------------------
+
         public MainWindow()
         {
-            NewUniverse = new Universe(1, _Worlds); //Create a new unvierse
             InitializeComponent();
+
+            //Create new universe
+            NewUniverse = new Universe(1, _Worlds); //Create a new unvierse
+            //Initialize some numbers for the world
             World.PopulationSize = 15;
             World.dCompletionTime = (decimal)0.10; // Distance d= 924 mm, velocity v= 9000 mm/s , ignoring acceleration and deceleration, massless point (no energy loss)
             World.iBreedingChance = 100;
@@ -133,15 +139,21 @@ namespace Genetic
             World.bAllowInnBreeding = false;
             World.iWolrdIndex = 1;
             World.iWorldGenerations = 5;
-            World.iNumberOfParameters = 5;
+            World.INumberOfPrimuses = 1;
+            World.iNumberOfParameters = 6;
+
+            Conn_Text_Status.Content = "Connectivity status: Not connected to controller";
+            Conn_Status.Fill = Brushes.Red;
+
+            //Reset flags and set GUI values
             RefreshNeeded = false;
             Input_Checked = true;
 
+            //Combo boxes values 
             List<Selection_Method_Struct> Combobox_SelectionMethods = new List<Selection_Method_Struct>();
             Combobox_SelectionMethods.Add(new Selection_Method_Struct("Biased Roulette [BR]",1));
             Combobox_SelectionMethods.Add(new Selection_Method_Struct("Tournament [T]", 2));
             Combobox_SelectionMethods.Add(new Selection_Method_Struct("Mixed selection [BR + T]", 3));
-
             Selection_Method.ItemsSource = Combobox_SelectionMethods;
 
             //Create a subscription
@@ -149,7 +161,8 @@ namespace Genetic
         }
 
         //ABB INTERFACE AND DATA EXCHANGE AREA
-        //////////////////////////////////////
+        //////////////////////////////////////--------------------------------------------------------------------------------------------------------------------
+
         //Creates a list of all controllers avaible in the network adn displays their info
         private void Scanner_Click(object sender, RoutedEventArgs e)
         {
@@ -160,12 +173,23 @@ namespace Genetic
         private void Controllers_In_Network_List_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Controller_Properties _SelectedController = null;
-            
+            string Output;
 
             if (Controllers_In_Network_List.SelectedItems.Count == 1)
             {
                 _SelectedController = (Controller_Properties)Controllers_In_Network_List.SelectedItems[0];
-                Results_Windows.Text = _Scanner.Network_Connect_To_Cotroller(_SelectedController.ControllerInfo);
+                Output = _Scanner.Network_Connect_To_Cotroller(_SelectedController.ControllerInfo);
+                Conn_Text_Status.Content = "Connectivity status: " + Output;
+
+                if (Output == "Selected controller not available / ready")
+                {
+                    Conn_Status.Fill = Brushes.Red;
+                }
+                else
+                {
+                    Conn_Status.Fill = Brushes.Green;
+                }
+                
             }
 
         }
@@ -217,9 +241,6 @@ namespace Genetic
                             Decimal.TryParse(_Individual_Time_Elapsed, out TryParse_Out);
                             World.Population[i].dTime = TryParse_Out;
                         }
-                        //World.CalculateFitnessPopulation();
-                        //Sort by fitness score
-                        //World.Population.Sort((x, y) => y.dFitnessScore.CompareTo(x.dFitnessScore));
                         DataReadyToRead = false;
                         RefreshNeeded = true;                  
                     }
@@ -232,110 +253,7 @@ namespace Genetic
         }
 
         //GENETIC ALGORITH ML AREA
-        ///////////////////////////////////
- 
-
-        private void CheckPopulation_Click(object sender, RoutedEventArgs e)
-        {
-            int iCheckResult;
-            iCheckResult =  World.CheckIfPopulationisComplete();
-
-            switch (iCheckResult)
-            {
-                case 0:
-                    Results_Windows.Text = "The population count is right";
-                    break;
-                case 1:
-                    Results_Windows.Text = "There is an overpopulation, " + (World.Population.Count - World.PopulationSize) + " individual/s less needed";
-                    break;
-                case 2:
-                    Results_Windows.Text = "There is an underpopulation, " + (World.PopulationSize - World.Population.Count) + " individual/s more needed";
-                    break;
-                case 3:
-                    Results_Windows.Text = "There is no population";
-                    break;
-
-                default:
-                break;
-            }
-
-        }
-
-        private void Calculate_fitness_of_population_Click(object sender, RoutedEventArgs e)
-        {
-
-            if (World.Population != null)
-            {
-                //Calculate the fitness score of each individual in the population
-                foreach (Individual item in World.Population)
-                {
-                    //item.dFitnessScore = World.CalculateFitness(item);
-                }
-
-                //Refresh the list
-                Parameters_View.ItemsSource = null;
-                Parameters_View.ItemsSource = World.Population;
-
-            }
-            else
-            {
-                Results_Windows.Text = "There is no population ";
-            }
-
-        }
-
-        private void Breed_Individuals_Click(object sender, RoutedEventArgs e)
-        {
-            Individual _Breeded = new Individual();
-
-            if (World.Population != null)
-            {
-                _Breeded = _Breeded.SwapDna(World.Population[0], World.Population[1], 2);
-                World.Population.Add(_Breeded);
-
-                _Breeded = _Breeded.SwapDna(World.Population[0], World.Population[1], 1);
-                World.Population.Add(_Breeded);
-
-                Parameters_View.ItemsSource = null;
-                Parameters_View.ItemsSource = World.Population;
-            }
-
-            else
-            {
-                Results_Windows.Text = "There is no population ";
-            }
-
-        }
-
-        private void Mutate_Individual_Click(object sender, RoutedEventArgs e)
-        {
-            Individual _Mutated = new Individual();
-            double _MutationChance = 100;
-
-            if (World.Population != null)
-            {
-                if (Parameters_View.SelectedIndex >= 0 & Parameters_View.SelectedIndex < World.Population.Count)
-                {
-                    _Mutated = _Mutated.Mutate(World.Population[Parameters_View.SelectedIndex], _MutationChance);
-                    World.Population[Parameters_View.SelectedIndex] = _Mutated;
-
-                    Parameters_View.ItemsSource = null;
-                    Parameters_View.ItemsSource = World.Population;
-                }
-                else
-                {
-                    Results_Windows.Text = "No individual selected";
-                }
-                
-            }
-
-            else
-            {
-                Results_Windows.Text = "There is no population ";
-            }
-
-        }
-
+        //////////////////////////////////////--------------------------------------------------------------------------------------------------------------------
         private void Refresh_Actual_List()
         {
             Parameters_View.ItemsSource = null;
@@ -352,8 +270,7 @@ namespace Genetic
         private void Let_There_Be_Light_Click(object sender, RoutedEventArgs e)
         {
 
-            //Check if a controller is selected for the algorithm
-            
+            //Check if a controller is selected for the algorithm and the parameters are all correct
             if (_Scanner.controller !=null && Check_Input_Parameters(arboAlgorithmParams_OK,World.iNumberOfParameters))
             {
                 //And there was light
@@ -402,8 +319,6 @@ namespace Genetic
 
                     //Choose the elite of the actual generation (The highrollers, the motherfuckers, la creme de la creme, the avengers)
                     World.ChooseElite();
-
-                    //Here should be a check if the actual highest fitness is enough. For later
 
                     //Breed a generation
                     World.Population = World.BreedNextGeneration_Roullete();
@@ -496,6 +411,12 @@ namespace Genetic
             Check_Numeric_Input(sender, e, 4, MessageOutput);
         }
 
+        private void Primuses_Number_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string MessageOutput = "Wrong Primuses number. Must be a natural number excluding 0";
+            Check_Numeric_Input(sender, e, 5, MessageOutput);
+        }
+
         private void Check_Numeric_Input(object sender, TextChangedEventArgs e, int Input_Index, string MessageOutput)
         {
             //Get the object
@@ -516,7 +437,7 @@ namespace Genetic
             if (Input_Checked == true && text.Length >= 1)
             {
 
-                if (bNotSomeNotNumbers && (_Input_Index == 1 || _Input_Index == 3 || _Input_Index == 4))
+                if (bNotSomeNotNumbers && (_Input_Index == 1 || _Input_Index == 3 || _Input_Index == 4 || _Input_Index == 5))
                 {
                     int.TryParse(textBox.Text, out TryParse_Out);
                     if (_Input_Index == 1)
@@ -536,14 +457,22 @@ namespace Genetic
                        arboAlgorithmParams_OK[3] = true;
                        Input_Checked = true;
                     }
-                    else
+                    else if (_Input_Index == 4)
                     {
                         MessageOutput = TryParse_Out == 0 ? "Population size cannot be 0, set at 1" : "";
                         TryParse_Out = TryParse_Out == 0 ? 1 : TryParse_Out;
                         World.PopulationSize = TryParse_Out;
                         Population_Size_Used.Content = TryParse_Out;
-                        MessageOutput = "";
                         arboAlgorithmParams_OK[4] = true;
+                        Input_Checked = true;
+                    }
+                    else
+                    {
+                        MessageOutput = TryParse_Out == 0 ? "Primuses number cannot be 0, set at 1" : "";
+                        TryParse_Out = TryParse_Out == 0 ? 1 : TryParse_Out;
+                        World.INumberOfPrimuses = TryParse_Out;
+                        Primuses_Number_Used.Content = TryParse_Out;
+                        arboAlgorithmParams_OK[5] = true;
                         Input_Checked = true;
                     }
 
@@ -581,6 +510,10 @@ namespace Genetic
                         case 4:
                             Population_Size_Used.Content = "Error";
                             arboAlgorithmParams_OK[4] = false;
+                            break;
+                        case 5:
+                            Primuses_Number_Used.Content = "Error";
+                            arboAlgorithmParams_OK[5] = false;
                             break;
                         default:
                             break;
@@ -647,6 +580,7 @@ namespace Genetic
                 NotInOrder = arboAlgorithmParams_OK[2] == false ? NotInOrder + "Wrong mutation rate; "    : NotInOrder;
                 NotInOrder = arboAlgorithmParams_OK[3] == false ? NotInOrder + "Wrong breeding rate; "    : NotInOrder;
                 NotInOrder = arboAlgorithmParams_OK[4] == false ? NotInOrder + "Wrong population size; "  : NotInOrder;
+                NotInOrder = arboAlgorithmParams_OK[5] == false ? NotInOrder + "Wrong primuses number; "  : NotInOrder;
                 Results_Windows.Text = NotInOrder;
             }
 
@@ -670,6 +604,8 @@ namespace Genetic
             Royal_Scribe.Add_Individual_Record(_Idividual_Recorded, Generation_Number, World_Numer, NewUniverse.Session_Number);
         }
 
-        
+        //  MISCELANEOUS AREA
+        ///////////////////////////////////
+   
     }
 }

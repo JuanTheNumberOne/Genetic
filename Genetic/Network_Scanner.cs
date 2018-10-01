@@ -143,12 +143,19 @@ namespace Network_Scanner_Domain
                     controller.Logon(UserInfo.DefaultUser);
 
                     uas = controller.AuthenticationSystem;
-                    _infomessage = "Controler: " + controllerInfo.Name + " is ready";
+                    _infomessage = "Connected to: " + controllerInfo.Name;
                     return _infomessage;
 
                 }
                 else
                 {
+                    if (controller != null)
+                    {
+                        controller.Logoff();
+                        controller.Dispose();
+                        controller = null;
+                    }
+
                     _infomessage = "Selected controller not available/ready";
                     return _infomessage;
                 }
