@@ -222,12 +222,104 @@ namespace Genetic
             }  
 
         }
+        
+        //Determines the winner of the single-elimination tournament
+        //Returns the survivor of the tournament (audaces fortuna iuvat!)
+        public static Individual Tournament_Round(List<Individual> Tournament_Group)
+        {
+
+            List<Individual> _Tournament_Group = Tournament_Group;
+            Individual _Gladiator_1, _Gladiator_2, _Victor_Gladiator;
+            int Rounds = _Tournament_Group.Count - 1;  // In a knockout torunament is R = n-1
+            int _iRandomRoll_1, _iRandomRoll_2, Winning_Chance , _Combat_Result;
+            int _Fight_Concluded = 0;
+
+            for (int i = 1; i <= Rounds; i++)
+            {
+                //Check for final round
+                if (i == Rounds)
+                {
+                    _iRandomRoll_1 = 0;
+                    _iRandomRoll_2 = 1;
+                    _Gladiator_1 = _Tournament_Group[_iRandomRoll_1];
+                    _Gladiator_2 = _Tournament_Group[_iRandomRoll_2];
+                }
+                else
+                {
+                    //Roll a number to select first oponent
+                    _iRandomRoll_1 = r.Next(0, _Tournament_Group.Count - 1);
+                    _Gladiator_1 = _Tournament_Group[_iRandomRoll_1];
+                    Thread.Sleep(100);
+
+                    //Roll a number to select second oponent (make sure the same oponent is not selected)
+                    do
+                    {
+                        _iRandomRoll_2 = r.Next(0, _Tournament_Group.Count - 1);
+                        Thread.Sleep(100);
+                    } while (_iRandomRoll_2 == _iRandomRoll_1);
+
+                    _Gladiator_2 = _Tournament_Group[_iRandomRoll_2];
+                }
+                
+
+                //Set the probabilities of winning
+                if (_Gladiator_1.dFitnessScore > _Gladiator_2.dFitnessScore)
+                {
+                    Winning_Chance = 80;
+  
+                }
+                else if (_Gladiator_1.dFitnessScore < _Gladiator_2.dFitnessScore)
+                {
+                    Winning_Chance = 20;
+                }
+                //Equal probability of winning
+                else
+                {
+                    Winning_Chance = 0;
+                }
+
+                //Here the two individuals fight
+                while (_Fight_Concluded == 0)
+                {
+                    _Combat_Result = r.Next(0, 100);
+
+                    if (Winning_Chance != 0)
+                    {
+                        _Fight_Concluded = _Combat_Result >= Winning_Chance ? 1 : 2;
+                    }
+                    else
+                    {
+                        _Fight_Concluded = _Combat_Result < 50 ? 1 : _Combat_Result == 50 ? 0 : 2;
+                    }
+                    Thread.Sleep(100);
+                }
+
+                //Check who survived the fight
+                if (_Fight_Concluded == 1)
+                {
+                    _Tournament_Group.RemoveAt(_iRandomRoll_1);
+                }
+
+                else
+                {
+                    _Tournament_Group.RemoveAt(_iRandomRoll_2);
+                }
+                //Set a new fight
+                _Fight_Concluded = 0;
+
+            }
+
+            //Return the survivor
+            _Victor_Gladiator = _Tournament_Group[0];
+            return _Victor_Gladiator;
+
+        }
 
         //The breeding method creates/breeds a new individual. This new individual's DNA is made out
         //of two separate individuals (the parents), that enter the method as its parameters (well the pointers/indexes to them).
         //The breeding does not always occur. The probability of happening is defined by the variable iBreedingChance.
         //This is supposed to represent different situations that can occur during a breeding (miscarriage, premature death of the newborn, etc).
-        
+
         public static Individual BreedIndividuals (int Individual_1_index, int Individual_2_index, List<Individual> _BreedingPool)
         {
             int _iRandomNumber = r.Next(1,100);
@@ -371,12 +463,15 @@ namespace Genetic
         public static List<Individual> BreedNextGeneration_Tournament()
         {
             List<Individual> _OldGeneration = Population;
+            List<Individual> _Population_Poll = new List<Individual>();
             List<Individual> _NewGeneration = new List<Individual>();
             List<Individual> _BreedingRoom = new List<Individual>();
+            List<Individual> _Tournament_Group = new List<Individual>();
+            Individual Survivor;
             Individual _Breeded = new Individual();
 
             int iRandomPickIndex = 0;
-            int iIndividualPicked = 0;
+            int iRandomTournamentSize = 0;
 
             int _EliteCount;
 
@@ -397,17 +492,30 @@ namespace Genetic
 
             do
             {
+
                 do
                 {
-                    iRandomPickIndex = r.Next(0, (_OldGeneration.Count - 1));
-                    Thread.Sleep(100);
-                    iIndividualPicked = World.MatingTest(_OldGeneration[iRandomPickIndex]);
-
-                    if (iIndividualPicked == 1)
+                    foreach (Individual item in _OldGeneration)
                     {
-                        _BreedingRoom.Add(_OldGeneration[iRandomPickIndex]);
-                        _OldGeneration.RemoveAt(iRandomPickIndex);
+                        _Population_Poll.Add(item);
                     }
+
+                    iRandomTournamentSize = r.Next(2, (_Population_Poll.Count));
+                    Thread.Sleep(100);
+                    do
+                    {
+                        iRandomPickIndex = r.Next(0, (_Population_Poll.Count - 1));
+                        Thread.Sleep(100);
+                        _Tournament_Group.Add(_Population_Poll[iRandomPickIndex]);
+                        _Population_Poll.RemoveAt(iRandomPickIndex);
+
+                    } while (_Tournament_Group.Count < iRandomTournamentSize);
+                   
+
+                     Survivor = World.Tournament_Round(_Tournament_Group);
+                    _BreedingRoom.Add(Survivor);
+                    _Population_Poll = new List<Individual>();
+                    _OldGeneration.Remove(Survivor);
 
                 } while (_BreedingRoom.Count < 2);
 
