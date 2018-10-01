@@ -266,6 +266,32 @@ namespace Genetic
             Parameters_View_Old.ItemsSource = World.Population;
         }
 
+        private void Refresh_Actual_List_Beta(List<Individual> _Population)
+        {
+            List<Individual> _Temp = new List<Individual>();
+
+            foreach (var item in _Population)
+            {
+                _Temp.Add(item);
+            }
+
+            Parameters_View.ItemsSource = null;
+            Parameters_View.ItemsSource = _Temp;
+        }
+
+        private void Refresh_Old_List_Beta(List<Individual> _Population)
+        {
+            List<Individual> _Temp = new List<Individual>();
+
+            foreach (var item in _Population)
+            {
+                _Temp.Add(item);
+            }
+
+            Parameters_View_Old.ItemsSource = null;
+            Parameters_View_Old.ItemsSource = _Temp;
+        }
+
 
         private void Let_There_Be_Light_Click(object sender, RoutedEventArgs e)
         {
@@ -314,15 +340,28 @@ namespace Genetic
                     //Display first generation in the window
                     if (i == 1)
                     {
-                        Refresh_Old_List();
+                        Refresh_Old_List_Beta(World.Population);
                     }
 
                     //Choose the elite of the actual generation (The highrollers, the motherfuckers, la creme de la creme, the avengers)
                     World.ChooseElite();
 
-                    //Breed a generation
-                    World.Population = World.BreedNextGeneration_Roullete();
-
+                    //Breed a generation with chosen reproduction method
+                    switch (World.iSelectedMethod)
+                    {
+                        case 1:
+                            World.Population = World.BreedNextGeneration_Roullete();
+                            break;
+                        case 2:
+                            World.Population = World.BreedNextGeneration_Tournament();
+                            break;
+                        case 3:
+                            World.Population = World.BreedNextGeneration_T_R();
+                            break;
+                        default:
+                            break;
+                    }
+    
                     //Update the number of the generation
                     iNumberOfGenerations = iNumberOfGenerations + 1;
 
@@ -354,9 +393,11 @@ namespace Genetic
                 }
 
                 //Finally display the last generation
-                Refresh_Actual_List();
+                Refresh_Actual_List_Beta(World.Population);
                 //Display the winner 
                 Results_Windows.Text = "And on the seventh day God had finished his work of creation, so he rested from all " + "The winner is: " + World.Population[0].DNA_Code;
+
+                NewUniverse.Session_Number++;
             }
             else if (_Scanner.controller == null && Check_Input_Parameters(arboAlgorithmParams_OK, World.iNumberOfParameters))
             {
@@ -387,6 +428,8 @@ namespace Genetic
 
 
         //INPUT PARAMETERS FILTER
+        //////////////////////////////////////--------------------------------------------------------------------------------------------------------------------
+
         private void Generation_Number_TextChanged(object sender, TextChangedEventArgs e)
         {
             string MessageOutput = "Wrong number of generations. Must be a natural number";
