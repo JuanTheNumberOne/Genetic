@@ -142,7 +142,7 @@ namespace Genetic
             World.INumberOfPrimuses = 1;
             World.iNumberOfParameters = 6;
 
-            Conn_Text_Status.Content = "Connectivity status: Not connected to controller";
+            Conn_Text_Status.Content = "Connectivity status: Not connected";
             Conn_Status.Fill = Brushes.Red;
 
             //Reset flags and set GUI values
@@ -595,6 +595,20 @@ namespace Genetic
 
         }
 
+        private void Elitism_used_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox _Elitism = (CheckBox)sender;
+
+            if (_Elitism.IsChecked == true )
+            {
+                World.iPercentageOfElites = 10;
+            }
+            else
+            {
+                World.iPercentageOfElites = 0;
+            }
+        }
+
         //DATABASE AREA
         ///////////////////////////////////
         private void RecordIndividual(Individual Idividual_Recorded, int World_Numer, int Generation_Number)
@@ -604,8 +618,9 @@ namespace Genetic
             Royal_Scribe.Add_Individual_Record(_Idividual_Recorded, Generation_Number, World_Numer, NewUniverse.Session_Number);
         }
 
+
         //  MISCELANEOUS AREA
         ///////////////////////////////////
-   
+
     }
 }

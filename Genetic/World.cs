@@ -375,6 +375,74 @@ namespace Genetic
             List<Individual> _BreedingRoom = new List<Individual>();
             Individual _Breeded = new Individual();
 
+            int iRandomPickIndex = 0;
+            int iIndividualPicked = 0;
+
+            int _EliteCount;
+
+            //Add the elites to the new generation. Elites are carried trough generations to preserve the good traits
+            foreach (Individual item in _OldGeneration)
+            {
+                if (item.bIsElite)
+                {
+                    _NewGeneration.Add(item);
+                }
+
+            }
+
+            _EliteCount = _NewGeneration.Count;
+
+            //Now breed until a new generation is born
+            //For breeding each iteration a random 
+
+            do
+            {
+                do
+                {
+                    iRandomPickIndex = r.Next(0, (_OldGeneration.Count - 1));
+                    Thread.Sleep(100);
+                    iIndividualPicked = World.MatingTest(_OldGeneration[iRandomPickIndex]);
+
+                    if (iIndividualPicked == 1)
+                    {
+                        _BreedingRoom.Add(_OldGeneration[iRandomPickIndex]);
+                        _OldGeneration.RemoveAt(iRandomPickIndex);
+                    }
+
+                } while (_BreedingRoom.Count < 2);
+
+                if (_BreedingRoom[0].DNA_Code != _BreedingRoom[1].DNA_Code | bAllowInnBreeding == true)
+                {
+                    //Mutate and Add breeded newborn to new generation
+                    _Breeded = World.BreedIndividuals(0, 1, _BreedingRoom);
+                    _Breeded = _Breeded.Mutate(_Breeded, dMutationChance);
+                    _NewGeneration.Add(_Breeded);
+
+                    //Return Parents to old generation
+                    _OldGeneration.Add(_BreedingRoom[0]);
+                    _OldGeneration.Add(_BreedingRoom[1]);
+                    _BreedingRoom.RemoveAt(1);
+                    _BreedingRoom.RemoveAt(0);
+
+                    //Re-sort the old generation
+                    _OldGeneration.Sort((x, y) => y.dFitnessScore.CompareTo(x.dFitnessScore));
+
+                }
+                else
+                {
+                    //Return Parents to old generation 
+                    _OldGeneration.Add(_BreedingRoom[0]);
+                    _OldGeneration.Add(_BreedingRoom[1]);
+                    _BreedingRoom.RemoveAt(1);
+                    _BreedingRoom.RemoveAt(0);
+                    //Add a new random individual to the population (an inmigrant)
+                    _NewGeneration.Add(new Individual(1));
+                }
+
+                //repeat breeding proccess until the new generation is born
+
+            } while (_NewGeneration.Count < PopulationSize);
+
             return _NewGeneration;
         }
 
