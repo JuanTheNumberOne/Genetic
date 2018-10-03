@@ -13,6 +13,10 @@ namespace Genetic
         public static int PopulationSize {get; set;}
         //Reference completion time
         public static decimal dCompletionTime { get; set;}
+        //Primus distance
+        public static decimal dPrimusDistance { get; set; }
+        //Robot max velocity
+        public static int iRobotMaxVel { get; set; }
         //Chance a breeding will be succesful (between 0 and 100)
         public static int iBreedingChance { get; set;}
         //Chance a breeding will be succesful (between 0 and 100)
@@ -33,6 +37,7 @@ namespace Genetic
         public static int INumberOfPrimuses { get; set; }
         //Number of parameters used
         public static int iNumberOfParameters { get; set; }
+
 
         //Random numbers
         static Random r = new Random();

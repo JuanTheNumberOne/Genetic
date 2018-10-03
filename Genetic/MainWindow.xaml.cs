@@ -132,7 +132,9 @@ namespace Genetic
             NewUniverse = new Universe(1, _Worlds); //Create a new unvierse
             //Initialize some numbers for the world
             World.PopulationSize = 15;
-            World.dCompletionTime = (decimal)0.10; // Distance d= 924 mm, velocity v= 9000 mm/s , ignoring acceleration and deceleration, massless point (no energy loss)
+            World.dPrimusDistance = 2000;
+            World.iRobotMaxVel = 7000;
+            World.dCompletionTime = (World.dPrimusDistance / World.iRobotMaxVel); // Distance d= 1180 mm, velocity v= 9000 mm/s , ignoring acceleration and deceleration, massless point (no energy loss)
             World.iBreedingChance = 100;
             World.iPercentageOfElites = 10;
             World.dMutationChance = 50;
@@ -174,9 +176,14 @@ namespace Genetic
         {
             Controller_Properties _SelectedController = null;
             string Output;
+            string Alive_Test;
+            MessageBoxResult result;
 
             if (Controllers_In_Network_List.SelectedItems.Count == 1)
             {
+                bool bAlive = false;
+                bool bAlive_previous = false;
+
                 _SelectedController = (Controller_Properties)Controllers_In_Network_List.SelectedItems[0];
                 Output = _Scanner.Network_Connect_To_Cotroller(_SelectedController.ControllerInfo);
                 Conn_Text_Status.Content = "Connectivity status: " + Output;
@@ -189,7 +196,23 @@ namespace Genetic
                 {
                     Conn_Status.Fill = Brushes.Green;
                 }
-                
+
+                bAlive_previous = _Scanner.Read_Bool("bAlive");
+                bAlive = !bAlive_previous;
+                _Scanner.Set_Reset_Bool("bAlive", bAlive);
+                bAlive = _Scanner.Read_Bool("bAlive");
+
+                if (bAlive != bAlive_previous)
+                {
+                    Alive_Test = "TEST R/W OK!"; 
+                }
+                else
+                {
+                    Alive_Test = "TEST R/W NOK!";
+                }
+
+                result = MessageBox.Show(Alive_Test);
+
             }
 
         }
