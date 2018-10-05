@@ -41,7 +41,6 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
 
-        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="511" Margin="10,41,0,-8" VerticalAlignment="Top" Width="896" Grid.RowSpan="2"/>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="24" Margin="24,176,0,0" VerticalAlignment="Top" Width="285" Grid.Column="3" Grid.Row="1"/>
         <TextBox x:Name="Generation_Number" HorizontalAlignment="Left" Height="23" Margin="161,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.389,0.522" TextChanged="Generation_Number_TextChanged" Grid.Row="1" Grid.Column="3"/>
 
@@ -165,5 +164,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button Content="Fetch test" HorizontalAlignment="Left" Height="32" Margin="589,179,0,0" VerticalAlignment="Top" Width="130" Grid.ColumnSpan="2" Grid.Row="1" Click="TestFetch" />
     </Grid>
 </Window>
