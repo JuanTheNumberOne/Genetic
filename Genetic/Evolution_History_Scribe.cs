@@ -82,6 +82,9 @@ namespace Evolution_History_Scribe_Space
                 _temp.DNA_Code = item.DNA;
                 _temp.DNA = _temp.Write_DNA_String_To_DNA_Array(_temp.DNA_Code);
                 _temp = _temp.WriteDNA_ToParameters(_temp.DNA);
+                _temp.dTime =  (decimal)item.Elapsed_Time;
+                _temp.dFitnessScore = (decimal)item.Fitness;
+                _temp.dWeightedFitnessValue = (decimal)item.Weighted_Fitness;
                 _Generation_Read_Individuals.Add(_temp);
             }
             return _Generation_Read_Individuals;

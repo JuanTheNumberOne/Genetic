@@ -684,6 +684,70 @@ namespace Genetic
             Royal_Scribe.Add_Individual_Record(_Idividual_Recorded, Generation_Number, World_Numer, NewUniverse.Session_Number);
         }
 
+        private void TestFetch(object sender, RoutedEventArgs e)
+        {
+            FetchGenerations(1, 1, 1, 1);
+            //FetchGenerations(1, 1, 1, 2);
+        }
+
+        //Fetch the selected generation
+        private void FetchGenerations (int Generation_Number, int World_Number, int Session_Number, int display)
+        {
+            int _Generation,_World,_Session,_display;
+            List <Individual> fetched_gen = new List<Individual>();
+            Royal_Scribe = new Evolution_History_Scribe();
+
+            _Generation = Generation_Number;
+            _World = World_Number;
+            _Session = Session_Number;
+            _display = display;
+
+            if (Check_Chosen_Indexes(_Generation,_World,_Session) == 1)
+            {
+                fetched_gen = Royal_Scribe.Read_Generation_Record(_Generation, _World, _Session);
+
+                if (fetched_gen.Count != 0)
+                {
+                    switch (display)
+                    {
+                        case 1:
+                            Refresh_Actual_List_Beta(fetched_gen);
+                            break;
+                        case 2:
+                            Refresh_Old_List_Beta(fetched_gen);
+                            break;
+
+                        default:
+                            Results_Windows.Text = "There is not such display";
+                            break;
+                    }
+                }
+                else
+                {
+                    Results_Windows.Text = "No data found about this generation, check if it has been erased from the database or use the Refres_Generations button";
+                }
+            }
+            else
+            {
+                //do nothing, not all the inputs have been chosen
+            }
+        }
+
+        //Check if the inputs contain all some number
+        private int Check_Chosen_Indexes (int Generation_Number, int World_Number, int Session_Number)
+        {
+            int _result = 0;
+            int Generation, World, Session;
+
+            Generation = Generation_Number;
+            World = World_Number;
+            Session = Session_Number;
+
+            _result = Generation <= 0 ? 0 :  World <= 0 ? 0 : Session <= 0 ? 0 : 1;
+            return _result;
+        }
+
+
 
         //  MISCELANEOUS AREA
         ///////////////////////////////////

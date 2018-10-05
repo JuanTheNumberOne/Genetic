@@ -148,9 +148,9 @@ namespace Genetic
 
             _DNA_String_Array = _DNA_Sample.Split(charSeparators);
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i <= 4; i++)
             {
-                int.TryParse(_DNA_String_Array[0],out _temp);
+                int.TryParse(_DNA_String_Array[i],out _temp);
                 _DNA_Array[i] = _temp;
             }
 
