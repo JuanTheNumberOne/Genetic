@@ -47,6 +47,14 @@ namespace Genetic
         private List<World> _Worlds = new List<World>();
         private Universe NewUniverse;
 
+        //Variables for the combo boxes
+        private int Session_Actual_Chosen;
+        private int World_Actual_Chosen;
+        private int Generation_Actual_Chosen_1;
+        private int Generation_Actual_Chosen_2;
+
+
+
         //Byre that indicates if the input parameters are right. // 0 Wrong parameter ; 1 right parameter
         private bool[] arboAlgorithmParams_OK = new bool[8];
         //--// BIT VALUES //--//
@@ -157,6 +165,9 @@ namespace Genetic
             Combobox_SelectionMethods.Add(new Selection_Method_Struct("Tournament [T]", 2));
             Combobox_SelectionMethods.Add(new Selection_Method_Struct("Mixed selection [BR + T]", 3));
             Selection_Method.ItemsSource = Combobox_SelectionMethods;
+
+            //Combo boxes lists
+           
 
             //Create a subscription
             DataTested += HandleDataTested;
@@ -745,6 +756,131 @@ namespace Genetic
 
             _result = Generation <= 0 ? 0 :  World <= 0 ? 0 : Session <= 0 ? 0 : 1;
             return _result;
+        }
+
+
+        
+        private void Session_Selected_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox Combo = (ComboBox)sender;
+            Selection_Method_Struct SelectedItem = (Selection_Method_Struct)Combo.SelectedItem;
+
+            //Update world chosen
+            Session_Actual_Chosen = SelectedItem.MethodIndex;
+            //Fetch the generarion if the session and world have also been chosen by the user
+            FetchGenerations(Generation_Actual_Chosen_1, World_Actual_Chosen, Session_Actual_Chosen, 1);
+            //Fetch the generarion if the session and world have also been chosen by the user
+            FetchGenerations(Generation_Actual_Chosen_2, World_Actual_Chosen, Session_Actual_Chosen, 2);
+        }
+
+        private void Session_Selected_DropDownOpened(object sender, EventArgs e)
+        {
+            List<Selection_Method_Struct> Session_Binder_List = new List<Selection_Method_Struct>();
+            List<int> Session_Numbers = new List<int>();
+            Evolution_History_Scribe Session_Seeker = new Evolution_History_Scribe();
+
+            //Fetch all the session numbers avaible in the database
+            Session_Numbers = Session_Seeker.Retrieve_Available_Sessions();
+
+            foreach (var item in Session_Numbers)
+            {
+                Session_Binder_List.Add(new Selection_Method_Struct(item.ToString(), item));
+            }
+
+            Session_Selected.ItemsSource = Session_Binder_List;
+        }
+
+        private void Wolrd_Selected_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox Combo = (ComboBox)sender;
+            Selection_Method_Struct SelectedItem = (Selection_Method_Struct)Combo.SelectedItem;
+
+            //Update world chosen
+            World_Actual_Chosen = SelectedItem.MethodIndex;
+            //Fetch the generarion if the session and world have also been chosen by the user
+            FetchGenerations(Generation_Actual_Chosen_1, World_Actual_Chosen, Session_Actual_Chosen, 1);
+            //Fetch the generarion if the session and world have also been chosen by the user
+            FetchGenerations(Generation_Actual_Chosen_2, World_Actual_Chosen, Session_Actual_Chosen, 2);
+        }
+
+        private void Wolrd_Selected_DropDownOpened(object sender, EventArgs e)
+        {
+            List<Selection_Method_Struct> World_Binder_List = new List<Selection_Method_Struct>();
+            List<int> World_Numbers = new List<int>();
+            Evolution_History_Scribe World_Seeker = new Evolution_History_Scribe();
+
+            //Fetch all the world numbers avaible in the database
+            World_Numbers = World_Seeker.Retrieve_Available_Worlds();
+
+            foreach (var item in World_Numbers)
+            {
+                World_Binder_List.Add(new Selection_Method_Struct(item.ToString(), item));
+            }
+
+            Wolrd_Selected.ItemsSource = World_Binder_List;
+
+        }
+
+        private void Generation_Selected_disp_2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox Combo = (ComboBox)sender;
+            Selection_Method_Struct SelectedItem = (Selection_Method_Struct)Combo.SelectedItem;
+
+            //Update world chosen
+            Generation_Actual_Chosen_1 = SelectedItem.MethodIndex;
+
+
+            //Fetch the generarion if the session and world have also been chosen by the user
+            FetchGenerations(Generation_Actual_Chosen_1, World_Actual_Chosen,Session_Actual_Chosen,1);
+        }
+
+        private void Generation_Selected_disp_2_DropDownOpened(object sender, EventArgs e)
+        {
+            List<Selection_Method_Struct> Generation_Binder_List = new List<Selection_Method_Struct>();
+            List<int> Generation_Numbers = new List<int>();
+            Evolution_History_Scribe Generation_Seeker = new Evolution_History_Scribe();
+
+            //Fetch all the generation numbers avaible in the database
+            Generation_Numbers = Generation_Seeker.Retrieve_Available_Generations();
+
+            foreach (var item in Generation_Numbers)
+            {
+                Generation_Binder_List.Add(new Selection_Method_Struct(item.ToString(), item));
+            }
+
+            Generation_Selected_disp_2.ItemsSource = Generation_Binder_List;
+
+        }
+
+        private void Generation_Selected_disp_1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox Combo = (ComboBox)sender;
+            Selection_Method_Struct SelectedItem = (Selection_Method_Struct)Combo.SelectedItem;
+
+            //Update world chosen
+            Generation_Actual_Chosen_2 = SelectedItem.MethodIndex;
+
+
+            //Fetch the generarion if the session and world have also been chosen by the user
+            FetchGenerations(Generation_Actual_Chosen_2, World_Actual_Chosen, Session_Actual_Chosen, 2);
+        }
+
+        private void Generation_Selected_disp_1_DropDownOpened(object sender, EventArgs e)
+        {
+            List<Selection_Method_Struct> Generation_Binder_List = new List<Selection_Method_Struct>();
+            List<int> Generation_Numbers = new List<int>();
+            Evolution_History_Scribe Generation_Seeker = new Evolution_History_Scribe();
+
+            //Fetch all the generation numbers avaible in the database
+            Generation_Numbers = Generation_Seeker.Retrieve_Available_Generations();
+
+            foreach (var item in Generation_Numbers)
+            {
+                Generation_Binder_List.Add(new Selection_Method_Struct(item.ToString(), item));
+            }
+
+            Generation_Selected_disp_1.ItemsSource = Generation_Binder_List;
+
         }
 
 

@@ -83,7 +83,7 @@
         <Label Content="Population size" HorizontalAlignment="Left" Height="28" Margin="24,271,0,0" VerticalAlignment="Top" Width="106" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.484,0.425" Grid.Column="3" Grid.Row="1"/>
         <TextBox x:Name="Population_Size" HorizontalAlignment="Left" Height="23" Margin="161,273,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.389,0.522" TextChanged="Population_Size_TextChanged" Grid.Row="1" Grid.Column="3"/>
         <Label x:Name="Population_Size_Used" Content="" HorizontalAlignment="Left" Height="24" Margin="256,272,0,0" VerticalAlignment="Top" Width="51" Grid.Column="3" Grid.Row="1"/>
-        <ComboBox x:Name="Generation_Selected_disp_1" HorizontalAlignment="Left" Height="28" Margin="53,64,0,0" VerticalAlignment="Top" Width="51" Grid.Column="2" SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding Combobox_SelectionMethods}">
+        <ComboBox x:Name="Generation_Selected_disp_1" HorizontalAlignment="Left" Height="28" Margin="53,64,0,0" VerticalAlignment="Top" Width="51" Grid.Column="2" DropDownOpened="Generation_Selected_disp_1_DropDownOpened" SelectionChanged="Generation_Selected_disp_1_SelectionChanged" ItemsSource="{Binding Combobox_SelectionMethods}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -92,7 +92,7 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <ComboBox x:Name="Generation_Selected_disp_2" HorizontalAlignment="Left" Height="27" Margin="53,196,0,0" VerticalAlignment="Top" Width="51" Grid.Column="2" SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding Combobox_SelectionMethods}" Grid.Row="1">
+        <ComboBox x:Name="Generation_Selected_disp_2" HorizontalAlignment="Left" Height="27" Margin="53,196,0,0" VerticalAlignment="Top" Width="51" Grid.Column="2" DropDownOpened="Generation_Selected_disp_2_DropDownOpened" SelectionChanged="Generation_Selected_disp_2_SelectionChanged" ItemsSource="{Binding Combobox_SelectionMethods}" Grid.Row="1">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -101,7 +101,7 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <ComboBox x:Name="Wolrd_Selected_disp_2" HorizontalAlignment="Left" Height="27" Margin="29,56,0,0" VerticalAlignment="Top" Width="51" Grid.Column="1" SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding Combobox_SelectionMethods}">
+        <ComboBox x:Name="Wolrd_Selected" HorizontalAlignment="Left" Height="27" Margin="29,56,0,0" VerticalAlignment="Top" Width="51" Grid.Column="1" DropDownOpened="Wolrd_Selected_DropDownOpened" SelectionChanged="Wolrd_Selected_SelectionChanged" ItemsSource="{Binding Combobox_SelectionMethods}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -110,7 +110,7 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <ComboBox x:Name="Session_Selected_disp_2" HorizontalAlignment="Left" Height="27" Margin="100,56,0,0" VerticalAlignment="Top" Width="51" Grid.Column="1" SelectionChanged="ComboBox_SelectionChanged" ItemsSource="{Binding Combobox_SelectionMethods}">
+        <ComboBox x:Name="Session_Selected" HorizontalAlignment="Left" Height="27" Margin="100,56,0,0" VerticalAlignment="Top" Width="51" Grid.Column="1" DropDownOpened="Session_Selected_DropDownOpened" SelectionChanged="Session_Selected_SelectionChanged"  ItemsSource="{Binding Session_Binder}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -164,6 +164,5 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Fetch test" HorizontalAlignment="Left" Height="32" Margin="589,179,0,0" VerticalAlignment="Top" Width="130" Grid.ColumnSpan="2" Grid.Row="1" Click="TestFetch" />
     </Grid>
 </Window>
