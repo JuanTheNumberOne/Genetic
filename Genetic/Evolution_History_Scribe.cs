@@ -89,5 +89,77 @@ namespace Evolution_History_Scribe_Space
             }
             return _Generation_Read_Individuals;
         }
+
+        public List<int> Retrieve_Available_Sessions()
+        {
+            List<int> Session_Numbers = new List<int>();
+            List<Evolution_History> _Session_Read_List = new List<Evolution_History>();
+
+            //Create a list of the retrieved records from the database
+            using (var context = new Machine_Learning_Entities())
+            {
+                //First fetch a copy of the database
+                _Session_Read_List = context.Evolution_History.ToList();
+
+                //Apply filters to get desired records
+                var Session_Numbers_Linq = _Session_Read_List.OrderBy(x => x.Session_Number).Where(b => b.Session_Number >= 1).Select(u => u.Session_Number).Distinct().ToList();
+                
+                foreach (var item in Session_Numbers_Linq)
+                {
+                    Session_Numbers.Add((int)item);
+                }
+
+            }
+
+            return Session_Numbers;
+        }
+
+        public List<int> Retrieve_Available_Worlds()
+        {
+            List<int> World_Numbers = new List<int>();
+            List<Evolution_History> _World_Read_List = new List<Evolution_History>();
+
+            //Create a list of the retrieved records from the database
+            using (var context = new Machine_Learning_Entities())
+            {
+                //First fetch a copy of the database
+                _World_Read_List = context.Evolution_History.ToList();
+
+                //Apply filters to get desired records
+                var World_Numbers_Linq = _World_Read_List.OrderBy(x => x.World_Number).Where(b => b.World_Number >= 1).Select(u => u.World_Number).Distinct().ToList();
+
+                foreach (var item in World_Numbers_Linq)
+                {
+                    World_Numbers.Add((int)item);
+                }
+
+            }
+
+            return World_Numbers;
+        }
+
+        public List<int> Retrieve_Available_Generations()
+        {
+            List<int> Generations_Numbers = new List<int>();
+            List<Evolution_History> _Generation_Read_List = new List<Evolution_History>();
+
+            //Create a list of the retrieved records from the database
+            using (var context = new Machine_Learning_Entities())
+            {
+                //First fetch a copy of the database
+                _Generation_Read_List = context.Evolution_History.ToList();
+
+                //Apply filters to get desired records
+                var World_Numbers_Linq = _Generation_Read_List.OrderBy(x => x.Generation_Number).Where(b => b.Generation_Number >= 1).Select(u => u.Generation_Number).Distinct().ToList();
+
+                foreach (var item in World_Numbers_Linq)
+                {
+                    Generations_Numbers.Add((int)item);
+                }
+
+            }
+
+            return Generations_Numbers;
+        }
     }
 }
