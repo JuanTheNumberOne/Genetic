@@ -18,4 +18,5 @@ packages/
 *.Context.cs
 *.Designer.cs
 *.Context.tt
+*csproj.user
 packages.config
